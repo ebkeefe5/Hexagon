@@ -9,7 +9,8 @@ const player2PieceWon = '#0c3329'
 const notAllowedPiece = '#4B2D0B' 
 const unclaimedPiece = '#654321';
 
-ioClient = io('http://localhost:3000');	
+//ioClient = io('http://localhost:3000');
+ioClient = io('http://35.225.166.66:8080');		
 
 ioClient.on("init", (playerNumber) => handleInit(playerNumber));
 ioClient.on("update", (gameState) => updateGameState(gameState));
