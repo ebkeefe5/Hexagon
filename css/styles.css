@@ -1,0 +1,51 @@
+#titleDiv{
+  width:400px;
+  text-align: center;
+}
+
+.center{
+  text-align: center;
+}
+
+.instructions {
+    width:250px;
+    height:100;
+    display: inline-block;
+    left:500px;
+    position: absolute;
+}
+
+.fixedFromLeft {
+    width:400px;
+    height:100;
+    display: inline-block;
+    left:500px;
+    position: absolute;
+}
+
+.wrapper {
+    float:left;
+}
+
+.clearfix {
+   clear: left;
+}
+
+.button {
+  background-color: black; /* Green */
+  border-style:solid;
+  border: 1 px solid black;
+  color: grey;
+  padding: 10px 22px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 12px;
+}
+
+.input
+{
+  border-radius: 2px;
+  border: 1 px solid black;
+}
+ 

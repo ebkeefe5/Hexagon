@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<style>
+	#gameScreen {
+	  display: none;
+	}
+	</style>
+
+	<head>
+		<!-- <script type="text/javascript" src="js/client/script.js"></script> -->
+		<link rel="stylesheet" href="css/styles.css">
+		<title>Hexagon Game</title>
+	</head>
+	<body style="background-color:#504f54">
+		
+        <div id="initialScreen">
+	        <div class="center">
+	            <h1>Multiplayer Hexagon</h1>
+	            <button type="submit" class="button"id="newGameButton">Create New Game</button>
+	           <div><h3>OR</h3></div>
+	           <div>
+	              <input type="text" placeholder="Enter Game Code" class = "input" id="gameCodeInput"/>
+	            </div>
+	            <button type="submit" class="button" id="joinGameButton">Join Game</button>
+	        </div>
+        </div>
+
+	    <div id="gameScreen">
+			<div id="titleDiv">
+				<h1>Hexagon</h1>
+			</div>
+			<div><h3>Your game code is: <span id="gameCodeDisplay"></span></h3></div>
+			<div class="wrapper">
+				<canvas height="340" width="500">
+					<p>Your browser doesn't support canvas :(</p>
+				</canvas>
+				<div class="instructions">
+					<h3>You are playing as: <span id="player"></h3>
+					<h3 id = "playerTurn">Red's Move!</h3>
+					<p>Red to connect the red edges with an unbroken chain of hexagons before green connects the green edges and vice versa</p>
+					<p>Red has the first move but cannot move in the center on the first turn</p>
+					<a class="button" href="instructions.html">Full Instructions</a>
+				</div>
+			</div>
+		<!-- <div class="clearfix">
+			<button class="button" onclick="startGame()">Restart Game</button>
+		</div> -->
+		</div>
+		
+
+		<script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js></script>
+		<script type="text/javascript" src="js/client/script.js"></script>
+	</body>
+</html>
