@@ -43,6 +43,10 @@
   border-radius: 12px;
 }
 
+.spacer{
+  padding-bottom: 100px;
+}
+
 .input
 {
   border-radius: 2px;
