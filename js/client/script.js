@@ -1,7 +1,3 @@
-//this is coming along nicely
-//the ip addresses of the server and client are hard coded and should be env vars 
-//but I'll figure that out later, if I do at all
-//this is the client code and can be hosted through my github
 const player1Piece = '#9b1306'; 
 const player1PieceWon = '#740e05';
 const player2Piece = '#196751';
@@ -9,9 +5,7 @@ const player2PieceWon = '#0c3329'
 const notAllowedPiece = '#4B2D0B' 
 const unclaimedPiece = '#654321';
 
-ioClient = io('https://35.238.40.176:8080',{secure: true});
-//io.connect('http://localhost:8000/');
-//ioClient = io.connect('https://35.238.40.176:8080/');	
+ioClient = io('https://35.238.40.176:8080',{secure: true});	
 
 ioClient.on("init", (playerNumber) => handleInit(playerNumber));
 ioClient.on("update", (gameState) => updateGameState(gameState));
@@ -103,14 +97,6 @@ function reset() {
   initialScreen.style.display = "block";
   gameScreen.style.display = "none";
 }
-
-
-// function startGame(gameState)
-// {
-// 	updateTurnView(gameState.data.turn);
-	
-// 	drawBoard(gameState.data.gameBoard);
-// }
 
 function initializeController()
 {
@@ -209,11 +195,7 @@ function getHexagon(x, y)
 	if (hexagon.col < 0 || hexagon.col >= BOARD_DIMENSION || hexagon.row < 0 || hexagon.row >= BOARD_DIMENSION)
 		return null;
 
-
-	// if (board[hexagon.row][hexagon.col] == 0)
 	return hexagon;
-
-	// return null;
 }
 
 function getDistance(x1, y1, x2, y2)
