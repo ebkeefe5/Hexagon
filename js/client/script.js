@@ -65,7 +65,7 @@ function getHexagonHtml(row, col, state)
 	var y3 = cy + 1/2 * HEXAGON_EDGE_LENGTH;
 	var y4 = cy + HEXAGON_EDGE_LENGTH;
 
-  var fillLine = "fill=";
+  var fillLine = 'fill="';
   if (state == -1)
     fillLine += notAllowedPiece + '"/>';
   else
