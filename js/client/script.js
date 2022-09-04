@@ -25,6 +25,7 @@ newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
 
 let playerNumber;
+let canvas;
 
 function newGame() {
   ioClient.emit('newGame');
@@ -87,8 +88,9 @@ function handleClick(row, col)
 
 function init()
 {
-  	initialScreen.style.display = "none";
-  	gameScreen.style.display = "block";
+	initialScreen.style.display = "none";
+	gameScreen.style.display = "block";
+  canvas = document.querySelector('canvas');
 
 	BOARD_DIMENSION = 9; //note this must be an odd number
 	HEXAGON_EDGE_LENGTH = Math.floor(canvas.width/(BOARD_DIMENSION*2.6));
