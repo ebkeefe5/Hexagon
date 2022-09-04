@@ -45,7 +45,10 @@ function drawBoard(boardModel)
   var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
   for (row = 0; row < boardModel.length; row++)
 	{
-		boardHtml += getHexagonHtml(boardModel[row], row);
+    for (col = 0; col < boardModel[row].length; col ++)
+    {
+      boardHtml += getHexagonHtml(row, col);
+    }
 	}
   boardHtml += '</svg>'
   boardElement.innerHTML = boardHtml;
