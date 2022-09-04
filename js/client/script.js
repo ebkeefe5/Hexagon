@@ -24,7 +24,6 @@ const gameCodeDisplay = document.getElementById('gameCodeDisplay');
 newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
 
-let canvas, ctx;
 let playerNumber;
 
 function newGame() {
@@ -39,16 +38,16 @@ function joinGame() {
   init();
 }
 
-function drawBoard(board)
+function drawBoard(boardModel)
 {
-  var board = document.getElementById("board");
+  var boardElement = document.getElementById("board");
   var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
-  for (row = 0; row < board.length; row++)
+  for (row = 0; row < boardModel.length; row++)
 	{
-		boardHtml += getHexagonHtml(board[row], row);
+		boardHtml += getHexagonHtml(boardModel[row], row);
 	}
   boardHtml += '</svg>'
-  board.innerHTML = boardHtml;
+  boardElement.innerHTML = boardHtml;
 }
 
 function getHexagonHtml(row, col)
@@ -90,9 +89,6 @@ function init()
 {
   	initialScreen.style.display = "none";
   	gameScreen.style.display = "block";
-
-	canvas = document.querySelector('canvas');
-	ctx = canvas.getContext('2d');
 
 	BOARD_DIMENSION = 9; //note this must be an odd number
 	HEXAGON_EDGE_LENGTH = Math.floor(canvas.width/(BOARD_DIMENSION*2.6));
