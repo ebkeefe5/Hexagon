@@ -30,15 +30,59 @@ let playerNumber;
 function newGame() {
   // ioClient.emit('newGame');
   init();
+  createBoard();
   console.log("started new game");
 }
-
-
 
 function joinGame() {
   const code = gameCodeInput.value;
   ioClient.emit('joinGame', code);
   init();
+}
+
+function createBoard()
+{
+  var board = document.getElementById("board");
+  var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
+  boardHtml += getHexagonHtml(0, 0);
+  boardHtml += getHexagonHtml(0, 1);
+  boardHtml += getHexagonHtml(0, 2);
+  boardHtml += getHexagonHtml(1, 0);
+  boardHtml += getHexagonHtml(1, 1);
+  boardHtml += getHexagonHtml(1, 2);
+  boardHtml += getHexagonHtml(2, 0);
+  boardHtml += getHexagonHtml(2, 1);
+  boardHtml += getHexagonHtml(2, 2);
+  boardHtml += '</svg>'
+  board.innerHTML = boardHtml;
+}
+
+function getHexagonHtml(row, col)
+{
+	var cx = TOP_LEFT_HEXAGON_CENTER_X + col * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*row;
+	var cy = TOP_LEFT_HEXAGON_CENTER_y + row * 3/2 * HEXAGON_EDGE_LENGTH;
+
+	var x1 = cx - Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2;
+	var x2 = cx;
+	var x3 = cx + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2;
+
+	var y1 = cy - 1/2 * HEXAGON_EDGE_LENGTH;
+	var y2 = cy - HEXAGON_EDGE_LENGTH;
+	var y3 = cy + 1/2 * HEXAGON_EDGE_LENGTH;
+	var y4 = cy + HEXAGON_EDGE_LENGTH;
+
+  return '<a href="#">' +
+      '<path d="M' + x1 + " " + y1 +
+               'L' + x2 + " " + y2 +
+               'L' + x3 + " " + y1 +
+               'L' + x3 + " " + y3 +
+               'L' + x2 + " " + y4 +
+               'L' + x1 + " " + y3 +
+               'L' + x1 + " " + y1 +
+               'Z"' +
+               'stroke="black"' +
+               'fill="' +  unclaimedPiece + '"/>' +
+    '</a>';
 }
 
 function init()
@@ -53,11 +97,11 @@ function init()
 	HEXAGON_EDGE_LENGTH = Math.floor(canvas.width/(BOARD_DIMENSION*2.6));
 	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH;
 	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH;
+  HEXAGON_WIDTH = Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
 	MAX_NUM_ROWS = 20; //the maximum num of rows of hexagons before definitely run off the canvas
 	MAX_NUM_COLS = 20; //the maximum num of cols before we run off the canvas
-	BORDER_WIDTH = 3;
-
-	initializeController();
+	BOARD_WIDTH = HEXAGON_WIDTH * BOARD_DIMENSION;
+  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * BOARD_DIMENSION * 2;
 }
 
 function handleInit(number) {
@@ -99,29 +143,6 @@ function reset() {
   gameCodeInput.value = '';
   initialScreen.style.display = "block";
   gameScreen.style.display = "none";
-}
-
-function initializeController()
-{
-
-	var hexagonDown = null;
-	var hexagonUp = null;
-
-	canvas.addEventListener('mousedown', e => {
-		hexagonDown = getHexagon(e.offsetX, e.offsetY);
-	});
-
-	canvas.addEventListener('mouseup', e => {
-		hexagonUp = getHexagon(e.offsetX, e.offsetY);
-		if (hexagonDown != null && hexagonUp != null && hexagonDown.row == hexagonUp.row && hexagonDown.col == hexagonUp.col) //we clicked and released somewhere valid in the same hexagon
-		{
-			ioClient.emit('hexagonClicked', {row:hexagonUp.row,col:hexagonUp.col})
-		}
-		else{
-			hexagonUp = null;
-			hexagonDown = null;
-		}
-	});
 }
 
 function updateTurnView(turn)
