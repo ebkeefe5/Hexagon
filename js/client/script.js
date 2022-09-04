@@ -1,29 +1,3 @@
-switch(state)
-	{
-	  case -1:
-	  	ctx.fillStyle = notAllowedPiece
-	  	break;
-	  case 1:
-	    ctx.fillStyle = player1Piece;
-	    break;
-	  case 2:
-	  	ctx.fillStyle = player2Piece;
-	    break;
-	  case 3:
-	  	ctx.fillStyle = player1PieceWon;
-	  	break;
-	  case 4:
-	  	ctx.fillStyle = player2PieceWon;
-	  	break;
-	  default:
-	    ctx.fillStyle = unclaimedPiece;
-	}
-
-const notAllowedPiece = '#4B2D0B';
-//unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
-const colors = ['#654321', '#9b1306', '#196751', '#740e05', '#0c3329'];
-
-
 ioClient = io('https://35.238.40.176:8080',{secure: true});
 
 ioClient.on("init", (playerNumber) => handleInit(playerNumber));
@@ -42,6 +16,10 @@ const gameCodeDisplay = document.getElementById('gameCodeDisplay');
 
 newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
+
+const notAllowedPiece = '#4B2D0B';
+//unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
+const colors = ['#654321', '#9b1306', '#196751', '#740e05', '#0c3329'];
 
 let playerNumber;
 let canvas;
