@@ -44,15 +44,13 @@ function createBoard()
 {
   var board = document.getElementById("board");
   var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
-  boardHtml += getHexagonHtml(0, 0);
-  boardHtml += getHexagonHtml(0, 1);
-  boardHtml += getHexagonHtml(0, 2);
-  boardHtml += getHexagonHtml(1, 0);
-  boardHtml += getHexagonHtml(1, 1);
-  boardHtml += getHexagonHtml(1, 2);
-  boardHtml += getHexagonHtml(2, 0);
-  boardHtml += getHexagonHtml(2, 1);
-  boardHtml += getHexagonHtml(2, 2);
+  for (var i = 0; i < BOARD_DIMENSION; i++)
+  {
+    for (var j = 0; j < BOARD_DIMENSION; j++)
+    {
+      boardHtml += getHexagonHtml(i, j);
+    }
+  }
   boardHtml += '</svg>'
   board.innerHTML = boardHtml;
 }
@@ -71,7 +69,8 @@ function getHexagonHtml(row, col)
 	var y3 = cy + 1/2 * HEXAGON_EDGE_LENGTH;
 	var y4 = cy + HEXAGON_EDGE_LENGTH;
 
-  return '<a href="#">' +
+  var line = '<a onclick=handleClick(' + row + ',' + col + ')>';
+  return line +
       '<path d="M' + x1 + " " + y1 +
                'L' + x2 + " " + y2 +
                'L' + x3 + " " + y1 +
@@ -83,6 +82,12 @@ function getHexagonHtml(row, col)
                'stroke="black"' +
                'fill="' +  unclaimedPiece + '"/>' +
     '</a>';
+}
+
+function handleClick(row, col)
+{
+  console.log("clicked: " + row + " " + col);
+  //ioClient.emit('hexagonClicked', {row, col})
 }
 
 function init()
@@ -98,10 +103,8 @@ function init()
 	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH;
 	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH;
   HEXAGON_WIDTH = Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
-	MAX_NUM_ROWS = 20; //the maximum num of rows of hexagons before definitely run off the canvas
-	MAX_NUM_COLS = 20; //the maximum num of cols before we run off the canvas
-	BOARD_WIDTH = HEXAGON_WIDTH * BOARD_DIMENSION;
-  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * BOARD_DIMENSION * 2;
+	BOARD_WIDTH = HEXAGON_WIDTH * BOARD_DIMENSION * 1.5;
+  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * BOARD_DIMENSION * Math.sqrt(3);
 }
 
 function handleInit(number) {
