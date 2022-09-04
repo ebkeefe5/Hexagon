@@ -5,14 +5,14 @@ const player2PieceWon = '#0c3329'
 const notAllowedPiece = '#4B2D0B'
 const unclaimedPiece = '#654321';
 
-//ioClient = io('https://35.238.40.176:8080',{secure: true});
+ioClient = io('https://35.238.40.176:8080',{secure: true});
 
-// ioClient.on("init", (playerNumber) => handleInit(playerNumber));
-// ioClient.on("update", (gameState) => updateGameState(gameState));
-// ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
-// ioClient.on('unknownCode', handleUnknownCode);
-// ioClient.on('disconnected', handleDisconnected);
-// ioClient.on('tooManyPlayers', handleTooManyPlayers);
+ioClient.on("init", (playerNumber) => handleInit(playerNumber));
+ioClient.on("update", (gameState) => updateGameState(gameState));
+ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
+ioClient.on('unknownCode', handleUnknownCode);
+ioClient.on('disconnected', handleDisconnected);
+ioClient.on('tooManyPlayers', handleTooManyPlayers);
 
 const gameScreen = document.getElementById('gameScreen');
 const initialScreen = document.getElementById('initialScreen');
@@ -22,15 +22,14 @@ const gameCodeInput = document.getElementById('gameCodeInput');
 const gameCodeDisplay = document.getElementById('gameCodeDisplay');
 
 newGameBtn.addEventListener('click', newGame);
-// joinGameBtn.addEventListener('click', joinGame);
+joinGameBtn.addEventListener('click', joinGame);
 
 let canvas, ctx;
 let playerNumber;
 
 function newGame() {
-  // ioClient.emit('newGame');
+  ioClient.emit('newGame');
   init();
-  createBoard();
   console.log("started new game");
 }
 
@@ -40,17 +39,14 @@ function joinGame() {
   init();
 }
 
-function createBoard()
+function drawBoard(board)
 {
   var board = document.getElementById("board");
   var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
-  for (var i = 0; i < BOARD_DIMENSION; i++)
-  {
-    for (var j = 0; j < BOARD_DIMENSION; j++)
-    {
-      boardHtml += getHexagonHtml(i, j);
-    }
-  }
+  for (row = 0; row < board.length; row++)
+	{
+		boardHtml += getHexagonHtml(board[row], row);
+	}
   boardHtml += '</svg>'
   board.innerHTML = boardHtml;
 }
@@ -87,7 +83,7 @@ function getHexagonHtml(row, col)
 function handleClick(row, col)
 {
   console.log("clicked: " + row + " " + col);
-  //ioClient.emit('hexagonClicked', {row, col})
+  ioClient.emit('hexagonClicked', {row, col})
 }
 
 function init()
