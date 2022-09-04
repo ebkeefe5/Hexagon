@@ -1,9 +1,28 @@
-const player1Piece = '#9b1306';
-const player1PieceWon = '#740e05';
-const player2Piece = '#196751';
-const player2PieceWon = '#0c3329'
-const notAllowedPiece = '#4B2D0B'
-const unclaimedPiece = '#654321';
+switch(state)
+	{
+	  case -1:
+	  	ctx.fillStyle = notAllowedPiece
+	  	break;
+	  case 1:
+	    ctx.fillStyle = player1Piece;
+	    break;
+	  case 2:
+	  	ctx.fillStyle = player2Piece;
+	    break;
+	  case 3:
+	  	ctx.fillStyle = player1PieceWon;
+	  	break;
+	  case 4:
+	  	ctx.fillStyle = player2PieceWon;
+	  	break;
+	  default:
+	    ctx.fillStyle = unclaimedPiece;
+	}
+
+const notAllowedPiece = '#4B2D0B';
+//unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
+const colors = ['#654321', '#9b1306', '#196751', '#740e05', '#0c3329'];
+
 
 ioClient = io('https://35.238.40.176:8080',{secure: true});
 
@@ -47,14 +66,14 @@ function drawBoard(boardModel)
 	{
     for (col = 0; col < boardModel[row].length; col ++)
     {
-      boardHtml += getHexagonHtml(row, col);
+      boardHtml += getHexagonHtml(row, col, boardModel[row][col]);
     }
 	}
   boardHtml += '</svg>'
   boardElement.innerHTML = boardHtml;
 }
 
-function getHexagonHtml(row, col)
+function getHexagonHtml(row, col, state)
 {
 	var cx = TOP_LEFT_HEXAGON_CENTER_X + col * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*row;
 	var cy = TOP_LEFT_HEXAGON_CENTER_y + row * 3/2 * HEXAGON_EDGE_LENGTH;
@@ -68,8 +87,13 @@ function getHexagonHtml(row, col)
 	var y3 = cy + 1/2 * HEXAGON_EDGE_LENGTH;
 	var y4 = cy + HEXAGON_EDGE_LENGTH;
 
-  var line = '<a onclick=handleClick(' + row + ',' + col + ')>';
-  return line +
+  var fillLine = "fill=";
+  if (state == -1)
+    fillLine += notAllowedPiece + '"/>';
+  else
+    fillLine += colors[state] + '"/>';
+  var firstLine = '<a onclick=handleClick(' + row + ',' + col + ')>';
+  return firstLine +
       '<path d="M' + x1 + " " + y1 +
                'L' + x2 + " " + y2 +
                'L' + x3 + " " + y1 +
@@ -79,7 +103,7 @@ function getHexagonHtml(row, col)
                'L' + x1 + " " + y1 +
                'Z"' +
                'stroke="black"' +
-               'fill="' +  unclaimedPiece + '"/>' +
+               fillLine +
     '</a>';
 }
 
