@@ -1,11 +1,11 @@
-ioClient = io('https://35.238.40.176:8080',{secure: true});
-
-ioClient.on("init", (playerNumber) => handleInit(playerNumber));
-ioClient.on("update", (gameState) => updateGameState(gameState));
-ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
-ioClient.on('unknownCode', handleUnknownCode);
-ioClient.on('disconnected', handleDisconnected);
-ioClient.on('tooManyPlayers', handleTooManyPlayers);
+// ioClient = io('https://35.238.40.176:8080',{secure: true});
+//
+// ioClient.on("init", (playerNumber) => handleInit(playerNumber));
+// ioClient.on("update", (gameState) => updateGameState(gameState));
+// ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
+// ioClient.on('unknownCode', handleUnknownCode);
+// ioClient.on('disconnected', handleDisconnected);
+// ioClient.on('tooManyPlayers', handleTooManyPlayers);
 
 const gameScreen = document.getElementById('gameScreen');
 const initialScreen = document.getElementById('initialScreen');
@@ -25,14 +25,14 @@ let playerNumber;
 let canvas;
 
 function newGame() {
-  ioClient.emit('newGame');
+  //ioClient.emit('newGame');
   init();
   console.log("started new game");
 }
 
 function joinGame() {
   const code = gameCodeInput.value;
-  ioClient.emit('joinGame', code);
+  //ioClient.emit('joinGame', code);
   init();
 }
 
@@ -40,21 +40,22 @@ function drawBoard(boardModel)
 {
   var boardElement = document.getElementById("board");
   var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
-  for (row = 0; row < boardModel.length; row++)
+  for (row = 0; row < BOARD_DIMENSION; row++)
 	{
-    for (col = 0; col < boardModel[row].length; col ++)
+    for (col = 0; col < BOARD_DIMENSION; col ++)
     {
-      boardHtml += getHexagonHtml(row, col, boardModel[row][col]);
+      boardHtml += getHexagonHtml(row, col, 0);
     }
 	}
+  boardHtml += getBoundingBox();
   boardHtml += '</svg>'
   boardElement.innerHTML = boardHtml;
 }
 
 function getHexagonHtml(row, col, state)
 {
-	var cx = TOP_LEFT_HEXAGON_CENTER_X + col * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*row;
-	var cy = TOP_LEFT_HEXAGON_CENTER_y + row * 3/2 * HEXAGON_EDGE_LENGTH;
+	var cx = TOP_LEFT_X + col * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*row;
+	var cy = TOP_LEFT_Y + row * 3/2 * HEXAGON_EDGE_LENGTH;
 
 	var x1 = cx - Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2;
 	var x2 = cx;
@@ -85,10 +86,42 @@ function getHexagonHtml(row, col, state)
     '</a>';
 }
 
+function getBoundingBox()
+{
+  var player1StrokeLine = 'stroke="' + colors[1] + '"/>';
+  var player2StrokeLine = 'stroke="' + colors[2] + '"/>';
+
+  var line1 = '<path d="M' + BOX_TOP_LEFT_X + " " + BOX_TOP_Y +
+           'L' + BOX_TOP_RIGHT_X  + " " + BOX_TOP_Y +
+           'Z"' +
+          'stroke-width = "3"' +
+           player1StrokeLine +
+           '</path>';
+  var line2 = '<path d="M' + BOX_TOP_RIGHT_X + " " + BOX_TOP_Y +
+           'L' + BOX_BOTTOM_RIGHT_X  + " " + BOX_BOTTOM_Y +
+           'Z"' +
+          'stroke-width = "3"' +
+           player2StrokeLine +
+           '</path>';
+ var line3 = '<path d="M' + BOX_BOTTOM_LEFT_X + " " + BOX_BOTTOM_Y +
+          'L' + BOX_BOTTOM_RIGHT_X  + " " + BOX_BOTTOM_Y +
+          'Z"' +
+         'stroke-width = "3"' +
+          player1StrokeLine +
+          '</path>';
+ var line4 = '<path d="M' + BOX_TOP_LEFT_X + " " + BOX_TOP_Y +
+           'L' + BOX_BOTTOM_LEFT_X  + " " + BOX_BOTTOM_Y +
+           'Z"' +
+          'stroke-width = "3"' +
+           player2StrokeLine +
+           '</path>';
+  return line1 + line2 + line3 + line4;
+}
+
 function handleClick(row, col)
 {
   console.log("clicked: " + row + " " + col);
-  ioClient.emit('hexagonClicked', {row, col})
+  //ioClient.emit('hexagonClicked', {row, col})
 }
 
 function init()
@@ -99,11 +132,20 @@ function init()
 
 	BOARD_DIMENSION = 9; //note this must be an odd number
 	HEXAGON_EDGE_LENGTH = Math.floor(canvas.width/(BOARD_DIMENSION*2.6));
-	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH;
-	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH;
-  HEXAGON_WIDTH = Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
-	BOARD_WIDTH = HEXAGON_WIDTH * BOARD_DIMENSION * 1.5;
-  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * BOARD_DIMENSION * Math.sqrt(3);
+	TOP_LEFT_X = HEXAGON_EDGE_LENGTH * 2;
+	TOP_LEFT_Y = HEXAGON_EDGE_LENGTH * 2;
+	BOARD_WIDTH = HEXAGON_EDGE_LENGTH * (BOARD_DIMENSION + 0.5) * Math.sqrt(3) * 1.5 + HEXAGON_EDGE_LENGTH;
+  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * BOARD_DIMENSION * 1.6 + 0.5 * HEXAGON_EDGE_LENGTH + HEXAGON_EDGE_LENGTH;
+
+  BOX_TOP_LEFT_X = TOP_LEFT_X - HEXAGON_EDGE_LENGTH * Math.sqrt(3);
+  BOX_BOTTOM_LEFT_X = BOX_TOP_LEFT_X + HEXAGON_EDGE_LENGTH * (BOARD_DIMENSION + 0.75) * Math.sqrt(3) * 0.5;
+  BOX_TOP_RIGHT_X = BOX_TOP_LEFT_X + HEXAGON_EDGE_LENGTH * (BOARD_DIMENSION + 0.5)* Math.sqrt(3);
+  BOX_BOTTOM_RIGHT_X = BOX_TOP_RIGHT_X + HEXAGON_EDGE_LENGTH * BOARD_DIMENSION * Math.sqrt(3) * 0.5 + HEXAGON_EDGE_LENGTH * Math.sqrt(3) * 0.48;
+
+  BOX_TOP_Y = TOP_LEFT_Y - HEXAGON_EDGE_LENGTH;
+  BOX_BOTTOM_Y = BOX_TOP_Y + BOARD_HEIGHT;
+
+  drawBoard(null);
 }
 
 function handleInit(number) {
