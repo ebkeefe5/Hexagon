@@ -8,27 +8,8 @@
 }
 
 .instructions {
-    width:250px;
-    height:100;
+    width:300px;
     display: inline-block;
-    left:500px;
-    position: absolute;
-}
-
-.fixedFromLeft {
-    width:400px;
-    height:100;
-    display: inline-block;
-    left:500px;
-    position: absolute;
-}
-
-.wrapper {
-    float:left;
-}
-
-.clearfix {
-   clear: left;
 }
 
 .button {
@@ -51,4 +32,4 @@
 {
   border-radius: 2px;
   border: 1 px solid black;
-} 
+}

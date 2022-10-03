@@ -7,7 +7,6 @@
 	</style>
 
 	<head>
-		<!-- <script type="text/javascript" src="js/client/script.js"></script> -->
 		<link rel="stylesheet" href="css/styles.css">
 		<title>Hexagon Game</title>
 	</head>
@@ -27,28 +26,22 @@
 	        </div>
         </div>
 
-	    <div id="gameScreen">
-			<div id="titleDiv">
+			<div class="center">
+				<div id="gameScreen">
 				<h1>Hexagon</h1>
-			</div>
-			<div><h3>Your game code is: <span id="gameCodeDisplay"></span></h3></div>
 
-			<div id = "board">
-			</div>
-			<div class="wrapper">
-				<canvas height="340" width="500">
-					<p>Your browser doesn't support canvas :(</p>
-				</canvas>
-				<div class="instructions">
-					<h3>You are playing as: <span id="player"></h3>
-					<h3 id = "playerTurn">Red's Move!</h3>
-					<p>Red to connect the red edges with an unbroken chain of hexagons before green connects the green edges and vice versa</p>
-					<p>Red has the first move but cannot move in the center on the first turn</p>
-					<a class="button" href="instructions.html">Full Instructions</a>
-				</div>
+				<div><h3>Your game code is: <span id="gameCodeDisplay"></span></h3></div>
+
+				<div id = "board" height="340" width="500">
+					</div>
+							<h3>You are playing as: <span id="player"></h3>
+							<h3 id = "playerTurn">Red's Move!</h3>
+							<p>Red to connect the red edges with an unbroken chain of hexagons before green connects the green edges and vice versa.</p>
+							<p>Red has the first move but cannot move in the center on the first turn.</p>
+							<a class="button" href="instructions.html">Full Instructions</a>
+						</div>
 			</div>
 		</div>
-
 
 		<script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js></script>
 		<script type="text/javascript" src="js/client/script.js"></script>

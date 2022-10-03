@@ -51,6 +51,7 @@ function drawBoard(boardModel)
   boardElement.innerHTML = boardHtml;
 }
 
+
 function getHexagonHtml(row, col, state)
 {
 	var cx = TOP_LEFT_HEXAGON_CENTER_X + col * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*row;
@@ -95,10 +96,9 @@ function init()
 {
 	initialScreen.style.display = "none";
 	gameScreen.style.display = "block";
-  canvas = document.querySelector('canvas');
 
-	BOARD_DIMENSION = 9; //note this must be an odd number
-	HEXAGON_EDGE_LENGTH = Math.floor(canvas.width/(BOARD_DIMENSION*2.6));
+	BOARD_DIMENSION = 9; //must be an odd number
+	HEXAGON_EDGE_LENGTH = Math.floor(window.screen.height/(BOARD_DIMENSION*5));
 	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH;
 	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH;
   HEXAGON_WIDTH = Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
