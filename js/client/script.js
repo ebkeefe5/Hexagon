@@ -22,7 +22,6 @@ const notAllowedPiece = '#4B2D0B';
 const colors = ['#654321', '#9b1306', '#196751', '#740e05', '#0c3329'];
 
 let playerNumber;
-let canvas;
 
 function newGame() {
   ioClient.emit('newGame');
