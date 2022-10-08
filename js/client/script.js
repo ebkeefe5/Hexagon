@@ -1,11 +1,11 @@
-ioClient = io('https://35.238.40.176:8080',{secure: true});
-
-ioClient.on("init", (playerNumber) => handleInit(playerNumber));
-ioClient.on("update", (gameState) => updateGameState(gameState));
-ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
-ioClient.on('unknownCode', handleUnknownCode);
-ioClient.on('disconnected', handleDisconnected);
-ioClient.on('tooManyPlayers', handleTooManyPlayers);
+// ioClient = io('https://35.238.40.176:8080',{secure: true});
+//
+// ioClient.on("init", (playerNumber) => handleInit(playerNumber));
+// ioClient.on("update", (gameState) => updateGameState(gameState));
+// ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
+// ioClient.on('unknownCode', handleUnknownCode);
+// ioClient.on('disconnected', handleDisconnected);
+// ioClient.on('tooManyPlayers', handleTooManyPlayers);
 
 const gameScreen = document.getElementById('gameScreen');
 const initialScreen = document.getElementById('initialScreen');
@@ -24,8 +24,9 @@ const colors = ['#654321', '#9b1306', '#196751', '#740e05', '#0c3329'];
 let playerNumber;
 
 function newGame() {
-  ioClient.emit('newGame');
+  // ioClient.emit('newGame');
   init();
+  drawBoard();
   console.log("started new game");
 }
 
@@ -35,21 +36,72 @@ function joinGame() {
   init();
 }
 
-function drawBoard(boardModel)
+function drawBoard()
 {
   var boardElement = document.getElementById("board");
   var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
-  for (row = 0; row < boardModel.length; row++)
+
+  //border
+  boardHtml += topBorderHtml();
+
+  //main board
+  for (row = 0; row < 9; row++)
 	{
-    for (col = 0; col < boardModel[row].length; col ++)
+    for (col = 0; col < 9; col ++)
     {
-      boardHtml += getHexagonHtml(row, col, boardModel[row][col]);
+      boardHtml += getHexagonHtml(row, col, 0);
     }
 	}
   boardHtml += '</svg>'
   boardElement.innerHTML = boardHtml;
 }
 
+function topBorderHtml()
+{
+  //top border
+  var x1 = TOP_LEFT_HEXAGON_CENTER_X - Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2;
+  var x2 = TOP_LEFT_HEXAGON_CENTER_X - Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
+
+  var x3 = TOP_LEFT_HEXAGON_CENTER_X + Math.sqrt(3)* (BOARD_DIMENSION - 0.83) * HEXAGON_EDGE_LENGTH;
+  var x4 = TOP_LEFT_HEXAGON_CENTER_X + Math.sqrt(3)* (BOARD_DIMENSION - 0.25) * HEXAGON_EDGE_LENGTH;
+
+  var y1 = TOP_LEFT_HEXAGON_CENTER_y - 1/2 * HEXAGON_EDGE_LENGTH;
+  var y2 = TOP_LEFT_HEXAGON_CENTER_y - HEXAGON_EDGE_LENGTH;
+  var y3 = TOP_LEFT_HEXAGON_CENTER_y - 3/2 * HEXAGON_EDGE_LENGTH;
+
+  var fillLine = 'fill="';
+  fillLine += colors[1] + '"/>';
+
+  var html = '<path d="M' + x1 + " " + y1 +
+               'L' + x2 + " " + y2 +
+               'L' + x1 + " " + y3 +
+               'L' + x4 + " " + y3 +
+               'L' + x3 + " " + y1 +
+               'L' + x1 + " " + y1 +
+               'Z"' +
+               fillLine;
+
+    //right border
+    var x5 = TOP_LEFT_HEXAGON_CENTER_X + BOARD_DIMENSION * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2 * (BOARD_DIMENSION - 2);
+    var x6 = TOP_LEFT_HEXAGON_CENTER_X + BOARD_DIMENSION * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2* (BOARD_DIMENSION - 1);
+    var x7 = TOP_LEFT_HEXAGON_CENTER_X + BOARD_DIMENSION * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2* (BOARD_DIMENSION);
+
+    var y4 = (BOARD_DIMENSION * 3/2 + 1) * HEXAGON_EDGE_LENGTH;
+    var y5 = (BOARD_DIMENSION * 3/2 + 1.5) * HEXAGON_EDGE_LENGTH;
+
+    var fillLine = 'fill="';
+    fillLine += colors[2] + '"/>';
+    html += '<path d="M' + x3 + " " + y1 +
+                 'L' + x4 + " " + y3 +
+                 'L' + x7 + " " + y4 +
+                 'L' + x6 + " " + y5 +
+                 'L' + x5 + " " + y4 +
+                 'L' + x3 + " " + y1 +
+                 'Z"' +
+                 fillLine;
+
+    return html;
+}
 
 function getHexagonHtml(row, col, state)
 {
@@ -98,11 +150,11 @@ function init()
 
 	BOARD_DIMENSION = 9; //must be an odd number
 	HEXAGON_EDGE_LENGTH = Math.floor(window.screen.height/(BOARD_DIMENSION*5));
-	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH;
-	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH;
+	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH * 2;
+	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH * 2;
   HEXAGON_WIDTH = Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
-	BOARD_WIDTH = HEXAGON_WIDTH * BOARD_DIMENSION * 1.5;
-  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * BOARD_DIMENSION * Math.sqrt(3);
+	BOARD_WIDTH = HEXAGON_WIDTH * (BOARD_DIMENSION + 1) * 1.5;
+  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * (BOARD_DIMENSION + 1) * Math.sqrt(3);
 }
 
 function handleInit(number) {
