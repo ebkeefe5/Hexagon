@@ -1,11 +1,11 @@
-// ioClient = io('https://35.238.40.176:8080',{secure: true});
-//
-// ioClient.on("init", (playerNumber) => handleInit(playerNumber));
-// ioClient.on("update", (gameState) => updateGameState(gameState));
-// ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
-// ioClient.on('unknownCode', handleUnknownCode);
-// ioClient.on('disconnected', handleDisconnected);
-// ioClient.on('tooManyPlayers', handleTooManyPlayers);
+ioClient = io('https://35.238.40.176:8080',{secure: true});
+
+ioClient.on("init", (playerNumber) => handleInit(playerNumber));
+ioClient.on("update", (gameState) => updateGameState(gameState));
+ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
+ioClient.on('unknownCode', handleUnknownCode);
+ioClient.on('disconnected', handleDisconnected);
+ioClient.on('tooManyPlayers', handleTooManyPlayers);
 
 const gameScreen = document.getElementById('gameScreen');
 const initialScreen = document.getElementById('initialScreen');
@@ -24,9 +24,8 @@ const colors = ['#654321', '#9b1306', '#196751', '#740e05', '#0c3329'];
 let playerNumber;
 
 function newGame() {
-  // ioClient.emit('newGame');
+  ioClient.emit('newGame');
   init();
-  drawBoard();
   console.log("started new game");
 }
 
@@ -36,7 +35,7 @@ function joinGame() {
   init();
 }
 
-function drawBoard()
+function drawBoard(boardModel)
 {
   var boardElement = document.getElementById("board");
   var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
@@ -45,11 +44,11 @@ function drawBoard()
   boardHtml += topBorderHtml();
 
   //main board
-  for (row = 0; row < 9; row++)
+  for (row = 0; row < boardModel.length; row++)
 	{
-    for (col = 0; col < 9; col ++)
+    for (col = 0; col < boardModel[row].length; col ++)
     {
-      boardHtml += getHexagonHtml(row, col, 0);
+      boardHtml += getHexagonHtml(row, col, boardModel[row][col]);
     }
 	}
   boardHtml += '</svg>'
