@@ -11,13 +11,11 @@ const gameScreen = document.getElementById('gameScreen');
 const initialScreen = document.getElementById('initialScreen');
 const newGameBtn = document.getElementById('newGameButton');
 const joinGameBtn = document.getElementById('joinGameButton');
-const goHomeBtn = document.getElementById('goHomeButton');
 const gameCodeInput = document.getElementById('gameCodeInput');
 const gameCodeDisplay = document.getElementById('gameCodeDisplay');
 
 newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
-goHomeBtn.addEventListener('click', goHome);
 
 const notAllowedPiece = '#4B2D0B';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
@@ -216,11 +214,6 @@ function handleDisconnected()
 {
 	alert('Your oppenent disconnected!');
 	reset();
-}
-
-function goHome()
-{
-  reset();
 }
 
 function reset() {
