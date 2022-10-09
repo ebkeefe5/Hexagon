@@ -61,7 +61,6 @@ function topBorderHtml()
   //top border
   var x1 = TOP_LEFT_HEXAGON_CENTER_X - Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2;
   var x2 = TOP_LEFT_HEXAGON_CENTER_X - Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
-
   var x3 = TOP_LEFT_HEXAGON_CENTER_X + Math.sqrt(3)* (BOARD_DIMENSION - 0.83) * HEXAGON_EDGE_LENGTH;
   var x4 = TOP_LEFT_HEXAGON_CENTER_X + Math.sqrt(3)* (BOARD_DIMENSION - 0.25) * HEXAGON_EDGE_LENGTH;
 
@@ -69,9 +68,7 @@ function topBorderHtml()
   var y2 = TOP_LEFT_HEXAGON_CENTER_y - HEXAGON_EDGE_LENGTH;
   var y3 = TOP_LEFT_HEXAGON_CENTER_y - 3/2 * HEXAGON_EDGE_LENGTH;
 
-  var fillLine = 'fill="';
-  fillLine += colors[1] + '"/>';
-
+  var fillLine = 'fill=" ' + colors[1] + '"/>';
   var html = '<path d="M' + x1 + " " + y1 +
                'L' + x2 + " " + y2 +
                'L' + x1 + " " + y3 +
@@ -86,11 +83,10 @@ function topBorderHtml()
     var x6 = TOP_LEFT_HEXAGON_CENTER_X + BOARD_DIMENSION * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2* (BOARD_DIMENSION - 1);
     var x7 = TOP_LEFT_HEXAGON_CENTER_X + BOARD_DIMENSION * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2* (BOARD_DIMENSION);
 
-    var y4 = (BOARD_DIMENSION * 3/2 + 1) * HEXAGON_EDGE_LENGTH;
-    var y5 = (BOARD_DIMENSION * 3/2 + 1.5) * HEXAGON_EDGE_LENGTH;
+    var y4 = TOP_LEFT_HEXAGON_CENTER_y + (BOARD_DIMENSION * 3/2 - 1) * HEXAGON_EDGE_LENGTH;
+    var y5 = TOP_LEFT_HEXAGON_CENTER_y + (BOARD_DIMENSION * 3/2 - 0.5) * HEXAGON_EDGE_LENGTH;
 
-    var fillLine = 'fill="';
-    fillLine += colors[2] + '"/>';
+    var fillLine = 'fill=" ' + colors[2] + '"/>';
     html += '<path d="M' + x3 + " " + y1 +
                  'L' + x4 + " " + y3 +
                  'L' + x7 + " " + y4 +
@@ -101,13 +97,12 @@ function topBorderHtml()
                  fillLine;
 
      //bottom border
-     var x8 = Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*BOARD_DIMENSION + 0.5 * Math.sqrt(3) * HEXAGON_EDGE_LENGTH;
-     var x9 = Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*BOARD_DIMENSION - 0.13 * Math.sqrt(3) * HEXAGON_EDGE_LENGTH;
+     var x8 = TOP_LEFT_HEXAGON_CENTER_X + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*BOARD_DIMENSION - 0.5 * Math.sqrt(3) * HEXAGON_EDGE_LENGTH;
+     var x9 = TOP_LEFT_HEXAGON_CENTER_X + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*BOARD_DIMENSION - 1.13 * Math.sqrt(3) * HEXAGON_EDGE_LENGTH;
 
-     var y6 = (BOARD_DIMENSION * 3/2 + 2) * HEXAGON_EDGE_LENGTH;
+     var y6 = TOP_LEFT_HEXAGON_CENTER_y + (BOARD_DIMENSION * 3/2) * HEXAGON_EDGE_LENGTH;
 
-     var fillLine = 'fill="';
-     fillLine += colors[1] + '"/>';
+     var fillLine = 'fill=" ' + colors[1] + '"/>';
      html += '<path d="M' + x5 + " " + y4 +
                   'L' + x6 + " " + y5 +
                   'L' + x5 + " " + y6 +
@@ -116,6 +111,20 @@ function topBorderHtml()
                   'L' + x5 + " " + y4 +
                   'Z"' +
                   fillLine;
+
+    //left border
+    var x10 = TOP_LEFT_HEXAGON_CENTER_X - Math.sqrt(3)*HEXAGON_EDGE_LENGTH * 1.5
+    var y7 = TOP_LEFT_HEXAGON_CENTER_y - 0.5 * HEXAGON_EDGE_LENGTH;
+
+    var fillLine = 'fill=" ' + colors[2] + '"/>';
+    html += '<path d="M' + x1 + " " + y1 +
+                 'L' + x2 + " " + y2 +
+                 'L' + x10 + " " + y7 +
+                 'L' + x9 + " " + y6 +
+                 'L' + x8 + " " + y4 +
+                 'L' + x1 + " " + y1 +
+                 'Z"' +
+                 fillLine;
 
     return html;
 }
@@ -167,11 +176,11 @@ function init()
 
 	BOARD_DIMENSION = 9; //must be an odd number
 	HEXAGON_EDGE_LENGTH = Math.floor(window.screen.height/(BOARD_DIMENSION*5));
-	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH * 2;
-	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH * 2;
+	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH * 2.5;
+	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH * 2.5;
   HEXAGON_WIDTH = Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
-	BOARD_WIDTH = HEXAGON_WIDTH * (BOARD_DIMENSION + 1) * 1.5;
-  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * (BOARD_DIMENSION + 1) * Math.sqrt(3);
+	BOARD_WIDTH = HEXAGON_WIDTH * (BOARD_DIMENSION + 1.5) * 1.5;
+  BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * (BOARD_DIMENSION + 1.5) * Math.sqrt(3);
 }
 
 function handleInit(number) {
