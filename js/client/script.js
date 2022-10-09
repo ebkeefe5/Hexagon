@@ -100,6 +100,23 @@ function topBorderHtml()
                  'Z"' +
                  fillLine;
 
+     //bottom border
+     var x8 = Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*BOARD_DIMENSION + 0.5 * Math.sqrt(3) * HEXAGON_EDGE_LENGTH;
+     var x9 = Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*BOARD_DIMENSION - 0.13 * Math.sqrt(3) * HEXAGON_EDGE_LENGTH;
+
+     var y6 = (BOARD_DIMENSION * 3/2 + 2) * HEXAGON_EDGE_LENGTH;
+
+     var fillLine = 'fill="';
+     fillLine += colors[1] + '"/>';
+     html += '<path d="M' + x5 + " " + y4 +
+                  'L' + x6 + " " + y5 +
+                  'L' + x5 + " " + y6 +
+                  'L' + x9 + " " + y6 +
+                  'L' + x8 + " " + y4 +
+                  'L' + x5 + " " + y4 +
+                  'Z"' +
+                  fillLine;
+
     return html;
 }
 
