@@ -187,7 +187,7 @@ function handleInit(number) {
   if (number == 1)
   	player.innerText = "red";
   else
-  	player.innerText = "green";
+  	player.innerText = "blue";
 }
 
 function updateGameState(gameState)
@@ -228,9 +228,9 @@ function updateTurnView(turn)
 	if (turn == 1)
 		document.getElementById('playerTurn').innerHTML = "Red's Move!";
 	else if(turn == 2)
-		document.getElementById('playerTurn').innerHTML = "Green's Move!";
+		document.getElementById('playerTurn').innerHTML = "Blue's Move!";
 	else if (turn == 3)
 		document.getElementById('playerTurn').innerHTML = "Game Over: Red Wins!";
 	else
-		document.getElementById('playerTurn').innerHTML = "Game Over: Green Wins!";
+		document.getElementById('playerTurn').innerHTML = "Game Over: Blue Wins!";
 }
