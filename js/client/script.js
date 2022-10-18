@@ -173,7 +173,7 @@ function init()
 	initialScreen.style.display = "none";
 	gameScreen.style.display = "block";
 
-	BOARD_DIMENSION = 9; //must be an odd number
+	BOARD_DIMENSION = 11; //must be an odd number
 	HEXAGON_EDGE_LENGTH = Math.floor(window.screen.height/(BOARD_DIMENSION*5));
 	TOP_LEFT_HEXAGON_CENTER_X = HEXAGON_EDGE_LENGTH * 2.5;
 	TOP_LEFT_HEXAGON_CENTER_y = HEXAGON_EDGE_LENGTH * 2.5;
