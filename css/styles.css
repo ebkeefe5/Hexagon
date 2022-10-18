@@ -9,7 +9,8 @@
 
 .instructions {
   margin : auto;       /* block alignment center */
-  width:30%;
+  width:50%;
+  text-align: left;
 }
 
 .image {
@@ -18,10 +19,10 @@
 }
 
 .button {
-  background-color: black; /* Green */
+  background-color: #A9A9A9;
   border-style:solid;
   border: 1 px solid black;
-  color: grey;
+  color: black;
   padding: 10px 22px;
   text-align: center;
   display: inline-block;
