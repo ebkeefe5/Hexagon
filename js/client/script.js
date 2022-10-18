@@ -17,9 +17,9 @@ const gameCodeDisplay = document.getElementById('gameCodeDisplay');
 newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
 
-const notAllowedPiece = '#4B2D0B';
+const notAllowedPiece = '#696969';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
-const colors = ['#654321', '#9b1306', '#196751', '#740e05', '#0c3329'];
+const colors = ['#A9A9A9', '#E42217', '#7690ac', '#800000', '#000080'];
 
 let playerNumber;
 
