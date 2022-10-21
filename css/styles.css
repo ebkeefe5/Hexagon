@@ -7,15 +7,27 @@
   text-align: center;
 }
 
+.spacerColumn {
+  float: left;
+  width: 16.5%;
+  padding: 5px;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
 .instructions {
   margin : auto;       /* block alignment center */
-  width:50%;
+  width:75%;
   text-align: left;
 }
 
 .image {
-  width:20%;
-  height:10%
+  height:100%;
+  max-width: 100%;
 }
 
 .button {
