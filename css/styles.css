@@ -16,6 +16,7 @@
 .column {
   float: left;
   width: 33.33%;
+  min-width:150px;
   padding: 5px;
 }
 
