@@ -13,9 +13,11 @@ const newGameBtn = document.getElementById('newGameButton');
 const joinGameBtn = document.getElementById('joinGameButton');
 const gameCodeInput = document.getElementById('gameCodeInput');
 const gameCodeDisplay = document.getElementById('gameCodeDisplay');
+const restartGameBtn = document.getElementById('restartGameButton');
 
 newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
+restartGameBtn.addEventListener('click', restartGame);
 
 const notAllowedPiece = '#696969';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
@@ -25,6 +27,7 @@ let playerNumber;
 
 function newGame() {
   ioClient.emit('newGame');
+  restartGameBtn.style.display = "none";
   init();
   console.log("started new game");
 }
@@ -33,6 +36,13 @@ function joinGame() {
   const code = gameCodeInput.value;
   ioClient.emit('joinGame', code);
   init();
+}
+
+function restartGame()
+{
+  restartGameBtn.style.display = "none";
+  ioClient.emit('restartGame');
+  console.log("restarted game");
 }
 
 function drawBoard(boardModel)
@@ -230,7 +240,16 @@ function updateTurnView(turn)
 	else if(turn == 2)
 		document.getElementById('playerTurn').innerHTML = "Blue's Move!";
 	else if (turn == 3)
-		document.getElementById('playerTurn').innerHTML = "Game Over: Red Wins!";
+  {
+  	document.getElementById('playerTurn').innerHTML = "Game Over: Red Wins!";
+  }
 	else
-		document.getElementById('playerTurn').innerHTML = "Game Over: Blue Wins!";
+  {
+   document.getElementById('playerTurn').innerHTML = "Game Over: Blue Wins!";
+  }
+  if (turn >=3 && playerNumber == 1)
+  {
+    restartGameBtn.style.display = "block";
+    restartGameBtn.style.margin = "auto";
+  }
 }
