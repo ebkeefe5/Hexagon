@@ -35,6 +35,7 @@ function newGame() {
 function joinGame() {
   const code = gameCodeInput.value;
   ioClient.emit('joinGame', code);
+  restartGameBtn.style.display = "none";
   init();
 }
 
