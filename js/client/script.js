@@ -61,7 +61,7 @@ function drawBoard(boardModel)
 	{
     for (col = 0; col < boardModel[row].length; col ++)
     {
-      boardHtml += getHexagonHtml(row, col, boardModel[row][col]);
+      boardHtml += getHexagonHtml(row, col, boardModel[row][col], 2);
     }
 	}
   boardHtml += '</svg>'
@@ -141,7 +141,7 @@ function topBorderHtml()
     return html;
 }
 
-function getHexagonHtml(row, col, state)
+function getHexagonHtml(row, col, state, gameType)
 {
 	var cx = TOP_LEFT_HEXAGON_CENTER_X + col * Math.sqrt(3) * HEXAGON_EDGE_LENGTH + Math.sqrt(3)*HEXAGON_EDGE_LENGTH/2*row;
 	var cy = TOP_LEFT_HEXAGON_CENTER_y + row * 3/2 * HEXAGON_EDGE_LENGTH;
@@ -160,7 +160,11 @@ function getHexagonHtml(row, col, state)
     fillLine += notAllowedPiece + '"/>';
   else
     fillLine += colors[state] + '"/>';
-  var firstLine = '<a onclick=handleClick(' + row + ',' + col + ')>';
+  var firstLine = '';
+  if (gameType == 2) //two player
+    firstLine = '<a onclick=handleClick(' + row + ',' + col + ')>';
+  else
+    firstLine = '<a onclick=handleClickOnePlayer(' + row + ',' + col + ')>';
   return firstLine +
       '<path d="M' + x1 + " " + y1 +
                'L' + x2 + " " + y2 +
