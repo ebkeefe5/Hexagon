@@ -56,6 +56,11 @@ function handleClickOnePlayer(row, col)
   updateTurn();
   drawBoardOnePlayer();
 
+  var winRed = checkWinBoardPlayer1(board);
+  if (winRed != null)
+    board = JSON.parse(JSON.stringify(winRed)); 
+  drawBoardOnePlayer();
+
 }
 
 function updateTurn()
@@ -100,3 +105,7 @@ function updateTurnViewOnePlayer(turn)
    document.getElementById('playerTurn').innerHTML = "Game Over: Blue Wins!";
   }
 }
+
+
+
+
