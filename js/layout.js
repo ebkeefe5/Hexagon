@@ -1,25 +1,5 @@
-//client for two player, state is stored seperately in server
-
-ioClient = io('https://35.238.40.176:8080',{secure: true});
-
-ioClient.on("init", (playerNumber) => handleInit(playerNumber));
-ioClient.on("update", (gameState) => updateGameState(gameState));
-ioClient.on('gameCode', (gameCode) => handleGameCode(gameCode));
-ioClient.on('unknownCode', handleUnknownCode);
-ioClient.on('disconnected', handleDisconnected);
-ioClient.on('tooManyPlayers', handleTooManyPlayers);
-
 const gameScreen = document.getElementById('gameScreen');
 const initialScreen = document.getElementById('initialScreen');
-const newGameBtn = document.getElementById('newGameButton');
-const joinGameBtn = document.getElementById('joinGameButton');
-const gameCodeInput = document.getElementById('gameCodeInput');
-const gameCodeDisplay = document.getElementById('gameCodeDisplay');
-const restartGameBtn = document.getElementById('restartGameButton');
-
-newGameBtn.addEventListener('click', newGame);
-joinGameBtn.addEventListener('click', joinGame);
-restartGameBtn.addEventListener('click', restartGame);
 
 const notAllowedPiece = '#696969';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
@@ -27,28 +7,7 @@ const colors = ['#A9A9A9', '#E42217', '#7690ac', '#800000', '#000080'];
 
 let playerNumber;
 
-function newGame() {
-  ioClient.emit('newGame');
-  restartGameBtn.style.display = "none";
-  init();
-  console.log("started new game");
-}
-
-function joinGame() {
-  const code = gameCodeInput.value;
-  ioClient.emit('joinGame', code);
-  restartGameBtn.style.display = "none";
-  init();
-}
-
-function restartGame()
-{
-  restartGameBtn.style.display = "none";
-  ioClient.emit('restartGame');
-  console.log("restarted game");
-}
-
-function drawBoard(boardModel)
+function drawBoard()
 {
   var boardElement = document.getElementById("board");
   var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
@@ -57,15 +16,23 @@ function drawBoard(boardModel)
   boardHtml += topBorderHtml();
 
   //main board
-  for (row = 0; row < boardModel.length; row++)
-	{
-    for (col = 0; col < boardModel[row].length; col ++)
+  for (row = 0; row < board.length; row++)
+  {
+    for (col = 0; col < board[row].length; col ++)
     {
-      boardHtml += getHexagonHtml(row, col, boardModel[row][col], 2);
+      boardHtml += getHexagonHtml(row, col, board[row][col], 1);
     }
-	}
+  }
   boardHtml += '</svg>'
   boardElement.innerHTML = boardHtml;
+}
+
+function selectPlayer(number) {
+  playerNumber = number;
+  if (number == 1)
+    player.innerText = "red";
+  else
+    player.innerText = "blue";
 }
 
 function topBorderHtml()
@@ -179,12 +146,6 @@ function getHexagonHtml(row, col, state, gameType)
     '</a>';
 }
 
-function handleClick(row, col)
-{
-  console.log("clicked: " + row + " " + col);
-  ioClient.emit('hexagonClicked', {row, col})
-}
-
 function init()
 {
 	initialScreen.style.display = "none";
@@ -197,66 +158,4 @@ function init()
   HEXAGON_WIDTH = Math.sqrt(3)*HEXAGON_EDGE_LENGTH;
 	BOARD_WIDTH = HEXAGON_WIDTH * (BOARD_DIMENSION + 1.5) * 1.5;
   BOARD_HEIGHT = HEXAGON_EDGE_LENGTH * (BOARD_DIMENSION + 1.5) * Math.sqrt(3);
-}
-
-function handleInit(number) {
-  playerNumber = number;
-  if (number == 1)
-  	player.innerText = "red";
-  else
-  	player.innerText = "blue";
-}
-
-function updateGameState(gameState)
-{
-	updateTurnView(gameState.data.turn);
-	drawBoard(gameState.data.gameBoard);
-}
-
-function handleGameCode(gameCode) {
-  gameCodeDisplay.innerText = gameCode;
-}
-
-function handleUnknownCode() {
-  reset();
-  alert('Unknown Game Code')
-}
-
-function handleTooManyPlayers() {
-  reset();
-  alert('This game is already in progress');
-}
-
-function handleDisconnected()
-{
-	alert('Your oppenent disconnected!');
-	reset();
-}
-
-function reset() {
-  playerNumber = null;
-  gameCodeInput.value = '';
-  initialScreen.style.display = "block";
-  gameScreen.style.display = "none";
-}
-
-function updateTurnView(turn)
-{
-	if (turn == 1)
-		document.getElementById('playerTurn').innerHTML = "Red's Move!";
-	else if(turn == 2)
-		document.getElementById('playerTurn').innerHTML = "Blue's Move!";
-	else if (turn == 3)
-  {
-  	document.getElementById('playerTurn').innerHTML = "Game Over: Red Wins!";
-  }
-	else
-  {
-   document.getElementById('playerTurn').innerHTML = "Game Over: Blue Wins!";
-  }
-  if (turn >=3 && playerNumber == 1)
-  {
-    restartGameBtn.style.display = "block";
-    restartGameBtn.style.margin = "auto";
-  }
 }

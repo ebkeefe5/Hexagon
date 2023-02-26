@@ -9,38 +9,8 @@ newSingleGameButton.addEventListener('click', newSingleGame);
 function newSingleGame() {
   init();
   selectPlayer(1);
-  restartGameBtn.style.display = "none";
-  gameCodeTitle.style.display = "none";
   createBoard();
-  drawBoardOnePlayer();
-}
-
-function drawBoardOnePlayer()
-{
-  var boardElement = document.getElementById("board");
-  var boardHtml = '<svg width="' + BOARD_WIDTH + '" height="' + BOARD_HEIGHT + '">';
-
-  //border
-  boardHtml += topBorderHtml();
-
-  //main board
-  for (row = 0; row < board.length; row++)
-  {
-    for (col = 0; col < board[row].length; col ++)
-    {
-      boardHtml += getHexagonHtml(row, col, board[row][col], 1);
-    }
-  }
-  boardHtml += '</svg>'
-  boardElement.innerHTML = boardHtml;
-}
-
-function selectPlayer(number) {
-  playerNumber = number;
-  if (number == 1)
-    player.innerText = "red";
-  else
-    player.innerText = "blue";
+  drawBoard();
 }
 
 function handleClickOnePlayer(row, col)
@@ -50,16 +20,14 @@ function handleClickOnePlayer(row, col)
 
   board[row][col] = playerNumber;
   updateTurn();
-  drawBoardOnePlayer();
 
   moveAI();
   updateTurn();
-  drawBoardOnePlayer();
 
   var winRed = checkWinBoardPlayer1(board);
   if (winRed != null)
     board = JSON.parse(JSON.stringify(winRed)); 
-  drawBoardOnePlayer();
+  drawBoard();
 
 }
 
