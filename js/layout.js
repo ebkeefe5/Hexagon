@@ -5,8 +5,6 @@ const notAllowedPiece = '#696969';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
 const colors = ['#A9A9A9', '#E42217', '#7690ac', '#800000', '#000080'];
 
-let playerNumber;
-
 function drawBoard()
 {
   var boardElement = document.getElementById("board");
@@ -25,14 +23,6 @@ function drawBoard()
   }
   boardHtml += '</svg>'
   boardElement.innerHTML = boardHtml;
-}
-
-function selectPlayer(number) {
-  playerNumber = number;
-  if (number == 1)
-    player.innerText = "red";
-  else
-    player.innerText = "blue";
 }
 
 function topBorderHtml()

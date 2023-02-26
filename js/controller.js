@@ -3,12 +3,12 @@ const newSingleGameButton = document.getElementById('newSingleGameButton');
 let board;
 let turn = 1;
 var AIPlayerNumber = 2;
+let playerNumber = 1;
 
 newSingleGameButton.addEventListener('click', newSingleGame);
 
 function newSingleGame() {
   init();
-  selectPlayer(1);
   createBoard();
   drawBoard();
 }
@@ -57,23 +57,3 @@ function moveAI()
     }
   }
 }
-
-function updateTurnViewOnePlayer(turn)
-{
-	if (turn == 1)
-		document.getElementById('playerTurn').innerHTML = "Red's Move!";
-	else if(turn == 2)
-		document.getElementById('playerTurn').innerHTML = "Blue's Move!";
-	else if (turn == 3)
-  {
-  	document.getElementById('playerTurn').innerHTML = "Game Over: Red Wins!";
-  }
-	else
-  {
-   document.getElementById('playerTurn').innerHTML = "Game Over: Blue Wins!";
-  }
-}
-
-
-
-
