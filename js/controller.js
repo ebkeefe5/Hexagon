@@ -1,18 +1,30 @@
 const newSingleGameButton = document.getElementById('newSingleGameButton');
+
 const selectBlueButton    = document.getElementById('selectBlueButton');
 const selectRedButton     = document.getElementById('selectRedButton');
+
 const restartGameButton   = document.getElementById('restartGame');
+
+const select1Btn    = document.getElementById('select1');
+const select2Btn    = document.getElementById('select2');
+const select3Btn  = document.getElementById('select3');
+
+const playerMoveLabel = document.getElementById('playerTurn');
 
 let board;
 let turn = 1;
 var AIPlayerNumber = 2;
 let playerNumber = 1;
+let difficulty = 1;
 let gameInProgress = false;
 
 newSingleGameButton.addEventListener('click', newSingleGame);
 selectBlueButton.addEventListener('click', selectBlue);
 selectRedButton.addEventListener('click', selectRed);
 restartGameButton.addEventListener('click', newSingleGame);
+select1Btn.addEventListener('click', select1);
+select2Btn.addEventListener('click', select2);
+select3Btn.addEventListener('click', select3);
 
 function selectRed()
 {
@@ -43,9 +55,58 @@ function selectBlue()
   AIPlayerNumber = 1;
   selectBlueButton.style.background = colors[2];
   moveAI();
+  markGameInProgress();
+  updateTurn();
   drawBoard();  
+}
+
+function select1()
+{
+  if (gameInProgress)
+  {
+    if (difficulty != 1)
+      alert ("Please restart game to change difficulty");
+    return;
+  }
+  difficulty = 1;
+  select1Btn.style.background = '#61666A';
+  select2Btn.style.background = '#A9A9A9';
+  select3Btn.style.background = '#A9A9A9';
+}
+
+function select2()
+{
+  if (gameInProgress)
+  {
+    if (difficulty != 2)
+      alert ("Please restart game to change difficulty");
+    return;
+  }
+  difficulty = 2;
+  select2Btn.style.background = '#61666A';
+  select1Btn.style.background = '#A9A9A9';
+  select3Btn.style.background = '#A9A9A9';
+}
+
+function select3()
+{
+  if (gameInProgress)
+  {
+    if (difficulty != 3)
+      alert ("Please restart game to change difficulty");
+    return;
+  }
+  difficulty = 3;
+  select3Btn.style.background = '#61666A';
+  select1Btn.style.background = '#A9A9A9';
+  select2Btn.style.background = '#A9A9A9';
+}
+
+function markGameInProgress()
+{
   gameInProgress = true;
-  turn = 2;
+  if (board[(BOARD_DIMENSION-1)/2][(BOARD_DIMENSION-1)/2] == -1) 
+    board[(BOARD_DIMENSION-1)/2][(BOARD_DIMENSION-1)/2] = 0; //center piece is allowable after first turn
 }
 
 function newSingleGame() {
@@ -55,6 +116,7 @@ function newSingleGame() {
   createBoard();
   drawBoard();
   selectRed();
+  select1();
 }
 
 function handleClickOnePlayer(row, col)
@@ -62,7 +124,7 @@ function handleClickOnePlayer(row, col)
   if (board[row][col] != 0 || turn != playerNumber)
     return;
 
-  gameInProgress = true; //at least one move has been made so the game is in progress
+  markGameInProgress();
 
   board[row][col] = playerNumber;
   updateTurn();
@@ -80,26 +142,13 @@ function handleClickOnePlayer(row, col)
 function updateTurn()
 {
   if (turn == 1)
-    turn = 2;
-  else
-    turn = 1;
-}
-
-function moveAI()
-{
-  if (turn != AIPlayerNumber)
-    return;
-
-  //choose an unclaimed piece very dumb strat
-  for (var row = 0; row < board.length; row++)
   {
-    for (var col = 0; col < board[row].length; col++)
-    {
-      if (board[row][col] == 0)
-      {
-        board[row][col] = AIPlayerNumber;
-        return;
-      }
-    }
+    playerTurn.innerHTML = 'Blue\'s move!';
+    turn = 2;
+  }
+  else
+  {
+    playerTurn.innerHTML = 'Red\'s move!';
+    turn = 1;
   }
 }
