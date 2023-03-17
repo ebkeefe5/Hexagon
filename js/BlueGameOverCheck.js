@@ -1,4 +1,4 @@
-//BFS to detect if red has won the game
+//BFS to detect if blue has won the game
 
 var visited = null; //keep track of which parts of the board have been visited
 var toVisit = null; //queue of nodes to explore
