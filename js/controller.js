@@ -156,12 +156,10 @@ function handleClickOnePlayer(row, col)
 
 function checkRedWin()
 {
-  var winRed = checkWinBoardPlayer1(board);
-  if (winRed != null)
+  if (checkWinBoardPlayer1(board))
   {
     gameOver = true;
     playerTurn.innerHTML = "Red Wins!"
-    board = JSON.parse(JSON.stringify(winRed)); 
     drawBoard();
     return true;
   }
@@ -170,12 +168,10 @@ function checkRedWin()
 
 function checkBlueWin()
 {
-  var blueWin = checkWinBoardPlayer2(board);
-  if (blueWin != null)
+  if (checkWinBoardPlayer2(board))
   {
     gameOver = true;
     playerTurn.innerHTML = "Blue Wins!"
-    board = JSON.parse(JSON.stringify(blueWin)); 
     drawBoard();
     return true;
   }
