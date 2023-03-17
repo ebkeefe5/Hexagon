@@ -40,6 +40,7 @@ function selectRed()
   playerNumber = 1;
   AIPlayerNumber = 2;
   selectRedButton.style.background = colors[1];
+  playerTurn.innerHTML = 'Red\'s move!';
 }
 
 function selectBlue()
