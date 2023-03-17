@@ -1,5 +1,5 @@
 //improve this strategy to be a little bit smarter
-function moveAILevel1()
+function moveAI()
 {
   if (turn != AIPlayerNumber)
     return;
