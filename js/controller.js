@@ -17,6 +17,7 @@ var AIPlayerNumber = 2;
 let playerNumber = 1;
 let difficulty = 1;
 let gameInProgress = false;
+let gameOver = false;
 
 newSingleGameButton.addEventListener('click', newSingleGame);
 selectBlueButton.addEventListener('click', selectBlue);
@@ -112,6 +113,7 @@ function markGameInProgress()
 function newSingleGame() {
   //the game hasn't been started until either the AI or player makes a move
   gameInProgress = false; 
+  gameOver = false;
   init();
   createBoard();
   drawBoard();
@@ -121,6 +123,12 @@ function newSingleGame() {
 
 function handleClickOnePlayer(row, col)
 {
+  if (gameOver)
+  {
+    alert("Please restart the game");
+    return;
+  }
+
   if (board[row][col] != 0 || turn != playerNumber)
     return;
 
@@ -129,14 +137,49 @@ function handleClickOnePlayer(row, col)
   board[row][col] = playerNumber;
   updateTurn();
 
+  if (turn == 2 && checkRedWin())
+    return;
+  if (turn == 1 && checkBlueWin())
+    return;
+
   moveAI();
   updateTurn();
 
-  var winRed = checkWinBoardPlayer1(board);
-  if (winRed != null)
-    board = JSON.parse(JSON.stringify(winRed)); 
+  if (turn == 2 && checkRedWin())
+    return;
+  if (turn == 1 && checkBlueWin())
+    return;
+
   drawBoard();
 
+}
+
+function checkRedWin()
+{
+  var winRed = checkWinBoardPlayer1(board);
+  if (winRed != null)
+  {
+    gameOver = true;
+    playerTurn.innerHTML = "Red Wins!"
+    board = JSON.parse(JSON.stringify(winRed)); 
+    drawBoard();
+    return true;
+  }
+  return false;
+}
+
+function checkBlueWin()
+{
+  var blueWin = checkWinBoardPlayer2(board);
+  if (blueWin != null)
+  {
+    gameOver = true;
+    playerTurn.innerHTML = "Blue Wins!"
+    board = JSON.parse(JSON.stringify(blueWin)); 
+    drawBoard();
+    return true;
+  }
+  return false;
 }
 
 function updateTurn()
