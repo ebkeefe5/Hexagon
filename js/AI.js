@@ -1,4 +1,5 @@
-function moveAI()
+//improve this strategy to be a little bit smarter
+function moveAILevel1()
 {
   if (turn != AIPlayerNumber)
     return;
@@ -15,4 +16,19 @@ function moveAI()
       }
     }
   }
+}
+
+//idea use a min-max algorithm to be able to play at an intermediate level
+//http://web.stanford.edu/class/archive/cs/cs221/cs221.1192/2018/restricted/posters/eliew/poster.pdf 
+//has ideas for an evaluation function
+//make sure to credit the students for the idea
+function moveAILevel2()
+{
+
+}
+
+//TODO figure out how to create an advanced AI
+function moveAILevel3()
+{
+
 }
