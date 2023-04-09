@@ -1,24 +1,59 @@
 //calculate heuristic as moves needed for red to win 
 //the game minus moves needed for blue to win the game
 
-//find moves needed for red to win
+const toVisit = new BinaryHeap();
 
-//copy board
-//11 by 11 matrix
-//replace -1 (center piece) with 0 if needed
-//0 unclaimed takes 1 step to move to
-//1 red takes 0 steps to move to
-//2 blue cannot move here
-//-1 already visited cannot move here
+var trackBoard = null; //keep track of which parts of the board have been visited
+var toVisit = 
+var size;
 
-//hex object
-	//steps from start
-	//xpos, ypos
+function calculateRedMovesToWin(board)
+{
+	trackBoard = JSON.parse(JSON.stringify(board));
+    toVisit = new BinaryHeap((a, b) => a.stepsFromStart - b.stepsFromStart);; //min heap of hexagons to explore
+    size = trackBoard.length;
+	for (var col = 0; col < trackBoard.length; col++)
+	{
+		insertHexagon(col, 0, trackBoard[0][col], 0);
+		trackBoard[0][col] = -1;
+	}
+	
+	const directions = [[0, -1], [1, -1], 
+						[-1, 0], [1, 0], 
+						[-1, 1], [0, 1]];
 
-//min heap of hexs, based on distance from start
+	while(!toVisit.isEmpty())
+	{
+		var hex = toVisit.extract();
+		if (hex.yPos == size)
+			return hex.stepsFromStart;
+		else
+		{
+			for (const [di, dj] of directions) 
+			{
+				var row = curr.x + di; var col = curr.y + dj;
+		    	if (row >= 0 && row < size && col >= 0 && col < size)
+		    	{
+		    		insertHexagon(row, col, trackBoard[row][col], hex.stepsFromStart);
+		    	}
+	    	}
+		}
+	}
+	console.log("error: trying to check min moves to win for red and the game is over");
+	return 100000;
+}
 
-//add all hexes in top row to heap
-//mark all of these hexes as visited
+function insertHexagon(xPos, yPos, value, steps)
+{
+	if (value == -1 || value == 2) //red cannot move where blue has moved or on an illegal move
+		return;
+	else if (value == 0)
+		toVisit.insert({xPos: xPos, yPos: yPos, stepsFromStart: steps + 1});
+	else if (value == 1)
+		toVisit.insert({xPos: xPos, yPos: yPos, stepsFromStart: steps});
+}
+
+
 
 //as long as the heap is not empty, pop from the heap
 	//if the hex ypos is at the last row, return the steps from start for this hex

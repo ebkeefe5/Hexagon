@@ -1,8 +1,10 @@
 //improve this strategy to be a little bit smarter
-function moveAI()
+function moveAI(board)
 {
   if (turn != AIPlayerNumber)
     return;
+
+  console.log(calculateRedMovesToWin(board));
 
   //choose an unclaimed piece very dumb strat
   for (var row = 0; row < board.length; row++)
