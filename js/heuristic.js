@@ -1,21 +1,16 @@
 //calculate heuristic as moves needed for red to win 
 //the game minus moves needed for blue to win the game
 
-const toVisit = new BinaryHeap();
-
-var trackBoard = null; //keep track of which parts of the board have been visited
-var toVisit = 
 var size;
 
 function calculateRedMovesToWin(board)
 {
-	trackBoard = JSON.parse(JSON.stringify(board));
-    toVisit = new BinaryHeap((a, b) => a.stepsFromStart - b.stepsFromStart);; //min heap of hexagons to explore
+	var trackBoard = JSON.parse(JSON.stringify(board)); //indexed as [row][col] or [yPos][xPos]
+    var toVisit = new PriorityQueue(); //min heap of hexagons to explore
     size = trackBoard.length;
 	for (var col = 0; col < trackBoard.length; col++)
 	{
-		insertHexagon(col, 0, trackBoard[0][col], 0);
-		trackBoard[0][col] = -1;
+		insertHexagon(col, 0, trackBoard[0][col], 0, toVisit, trackBoard);
 	}
 	
 	const directions = [[0, -1], [1, -1], 
@@ -24,17 +19,17 @@ function calculateRedMovesToWin(board)
 
 	while(!toVisit.isEmpty())
 	{
-		var hex = toVisit.extract();
-		if (hex.yPos == size)
+		var hex = toVisit.pop();
+		if (hex.yPos == size - 1)
 			return hex.stepsFromStart;
 		else
 		{
 			for (const [di, dj] of directions) 
 			{
-				var row = curr.x + di; var col = curr.y + dj;
+				var col = hex.xPos + di; var row = hex.yPos + dj;
 		    	if (row >= 0 && row < size && col >= 0 && col < size)
 		    	{
-		    		insertHexagon(row, col, trackBoard[row][col], hex.stepsFromStart);
+		    		insertHexagon(col, row, trackBoard[row][col], hex.stepsFromStart, toVisit, trackBoard);
 		    	}
 	    	}
 		}
@@ -43,21 +38,21 @@ function calculateRedMovesToWin(board)
 	return 100000;
 }
 
-function insertHexagon(xPos, yPos, value, steps)
+function insertHexagon(xPos, yPos, value, steps, toVisit, trackBoard)
 {
 	if (value == -1 || value == 2) //red cannot move where blue has moved or on an illegal move
 		return;
 	else if (value == 0)
-		toVisit.insert({xPos: xPos, yPos: yPos, stepsFromStart: steps + 1});
+	{
+		trackBoard[yPos][xPos] = -1
+		toVisit.push({xPos: xPos, yPos: yPos, stepsFromStart: steps + 1});
+	}
 	else if (value == 1)
-		toVisit.insert({xPos: xPos, yPos: yPos, stepsFromStart: steps});
-}
-
-
-
-//as long as the heap is not empty, pop from the heap
-	//if the hex ypos is at the last row, return the steps from start for this hex
-	//otherwise, add all of it's neighbors to the heap and mark them as visited 
+	{
+		trackBoard[yPos][xPos] = -1
+		toVisit.push({xPos: xPos, yPos: yPos, stepsFromStart: steps});
+	}
+} 
 
 //find moves needed for blue to win
 //adjust above algorithm for blue
