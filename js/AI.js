@@ -4,7 +4,7 @@ function moveAI(board)
   if (turn != AIPlayerNumber)
     return;
 
-  console.log(calculateRedMovesToWin(board));
+  console.log("Red has: " + calculateRedMovesToWin(board) + " moves left to win the game");
 
   //choose an unclaimed piece very dumb strat
   for (var row = 0; row < board.length; row++)
@@ -14,6 +14,7 @@ function moveAI(board)
       if (board[row][col] == 0)
       {
         board[row][col] = AIPlayerNumber;
+        console.log("Blue has: " + calculateBlueMovesToWin(board) + " moves left to win the game");
         return;
       }
     }
