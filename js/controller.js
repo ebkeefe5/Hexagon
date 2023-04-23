@@ -56,7 +56,10 @@ function selectBlue()
   playerNumber = 2;
   AIPlayerNumber = 1;
   selectBlueButton.style.background = colors[2];
-  moveAI(board);
+  if (difficulty == 1)
+    moveAI(board);
+  else if (difficulty == 2)
+    moveAILevel2(board);
   markGameInProgress();
   updateTurn();
   drawBoard();  
@@ -143,7 +146,10 @@ function handleClickOnePlayer(row, col)
   if (turn == 1 && checkBlueWin())
     return;
 
-  moveAI(board);
+  if (difficulty == 1)
+    moveAI(board);
+  else if (difficulty == 2)
+    moveAILevel2(board);
   updateTurn();
 
   if (turn == 2 && checkRedWin())
