@@ -19,7 +19,7 @@ function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
 
   if (maximizingPlayer) {
     let bestValue = -Infinity;
-    //if I already won return infinity
+    //TODO only check if game over if at least 11 moves
     if ((AIPlayerNumber == 1 && checkWinBoardPlayer2(boardCopy)) 
       || (AIPlayerNumber == 2 && checkWinBoardPlayer1(boardCopy)))
       return -Infinity;
@@ -40,6 +40,7 @@ function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
     }
     return bestValue;
   } else {
+    //TODO only check if game over if at least 11 moves
     if ((playerNumber == 1 && checkWinBoardPlayer2(boardCopy)) 
       || (playerNumber == 2 && checkWinBoardPlayer1(boardCopy)))
       return Infinity;
@@ -107,6 +108,7 @@ function calculateHeuristic(board)
 }
 
 //return a list of open spots in each player's most central shortest path
+//TODO the list of potential moves can be a lot smarter
 function getOpenCentralMoves(board)
 {
   var redShortestPath = getRedShortestPath(board);
