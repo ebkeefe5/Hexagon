@@ -22,7 +22,7 @@ let gameOver = false;
 newSingleGameButton.addEventListener('click', newSingleGame);
 selectBlueButton.addEventListener('click', selectBlue);
 selectRedButton.addEventListener('click', selectRed);
-restartGameButton.addEventListener('click', newSingleGame);
+restartGameButton.addEventListener('click', restartGame);
 select1Btn.addEventListener('click', select1);
 select2Btn.addEventListener('click', select2);
 select3Btn.addEventListener('click', select3);
@@ -60,6 +60,8 @@ function selectBlue()
     moveAI(board);
   else if (difficulty == 2)
     moveAILevel2(board);
+  else
+    moveAILevel3(board);
   markGameInProgress();
   updateTurn();
   drawBoard();  
@@ -116,13 +118,18 @@ function markGameInProgress()
 
 function newSingleGame() {
   //the game hasn't been started until either the AI or player makes a move
+  restartGame(); 
+  select1();
+}
+
+function restartGame()
+{
   gameInProgress = false; 
   gameOver = false;
   init();
   createBoard();
-  drawBoard();
+  drawBoard();  
   selectRed();
-  select1();
 }
 
 function handleClickOnePlayer(row, col)
@@ -141,27 +148,29 @@ function handleClickOnePlayer(row, col)
   board[row][col] = playerNumber;
   updateTurn();
 
-  if (turn == 2 && checkRedWin())
+  if (turn == 2 && checkRedWin(board))
     return;
-  if (turn == 1 && checkBlueWin())
+  if (turn == 1 && checkBlueWin(board))
     return;
 
   if (difficulty == 1)
     moveAI(board);
   else if (difficulty == 2)
     moveAILevel2(board);
+  else
+     moveAILevel3(board);
   updateTurn();
 
-  if (turn == 2 && checkRedWin())
+  if (turn == 2 && checkRedWin(board))
     return;
-  if (turn == 1 && checkBlueWin())
+  if (turn == 1 && checkBlueWin(board))
     return;
 
   drawBoard();
 
 }
 
-function checkRedWin()
+function checkRedWin(board)
 {
   if (checkWinBoardPlayer1(board))
   {
@@ -173,7 +182,7 @@ function checkRedWin()
   return false;
 }
 
-function checkBlueWin()
+function checkBlueWin(board)
 {
   if (checkWinBoardPlayer2(board))
   {

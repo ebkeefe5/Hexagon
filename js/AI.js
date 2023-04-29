@@ -3,36 +3,51 @@ function moveAI(board)
   moveAIAtDepth(1);
 }
 
+function moveAILevel2(board) {
+  moveAIAtDepth(2); 
+}
+
+function moveAILevel3(board)
+{
+  moveAIAtDepth(3);
+}
+
 function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
-  if (depth === 0){ //|| isGameOver(board)) {
+  if (depth === 0){
     return calculateHeuristic(boardCopy);
   }
 
   if (maximizingPlayer) {
     let bestValue = -Infinity;
-    for (var row = 0; row < boardCopy.length; row++)
-    {
-      for (var col = 0; col < boardCopy[row].length; col++)
-      {
-        if (boardCopy[row][col] != 0)
-          continue;
-        copy = JSON.parse(JSON.stringify(boardCopy)); 
-        copy[row][col] = AIPlayerNumber;
-        let value = minMax(copy, depth - 1, false);
-        bestValue = Math.max(bestValue, value);
-        alpha = Math.max(alpha, value);
-        if (beta <= alpha) {
-          break; 
-        }
-      }
+    //if I already won return infinity
+    if ((AIPlayerNumber == 1 && checkWinBoardPlayer2(boardCopy)) 
+      || (AIPlayerNumber == 2 && checkWinBoardPlayer1(boardCopy)))
+      return -Infinity;
+    let openMoves = getOpenCentralMoves(boardCopy);
+    for (let openMove of openMoves){
+      let row = openMove.y;
+      let col = openMove.x;
+      if (boardCopy[row][col] != 0)
+        continue;
+      copy = JSON.parse(JSON.stringify(boardCopy)); 
+      copy[row][col] = AIPlayerNumber;
+      let value = minMax(copy, depth - 1, false);
+      bestValue = Math.max(bestValue, value);
+      alpha = Math.max(alpha, value);
+      if (beta <= alpha) {
+        break; 
+      }    
     }
     return bestValue;
   } else {
+    if ((playerNumber == 1 && checkWinBoardPlayer2(boardCopy)) 
+      || (playerNumber == 2 && checkWinBoardPlayer1(boardCopy)))
+      return Infinity;
     let bestValue = Infinity;
-    for (var row = 0; row < boardCopy.length; row++)
-    {
-      for (var col = 0; col < boardCopy[row].length; col++)
-      {
+    let openMoves = getOpenCentralMoves(boardCopy);
+    for (let openMove of openMoves){
+      let row = openMove.y;
+      let col = openMove.x;
         if (boardCopy[row][col] != 0)
           continue;
         copy = JSON.parse(JSON.stringify(boardCopy)); 
@@ -43,27 +58,11 @@ function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
         if (beta <= alpha) {
           break; 
         }
-      }
     }
     return bestValue;
   }
 }
 
-function moveAILevel2() {
-  moveAIAtDepth(2); 
-}
-
-//not supported yet
-function moveAILevel3()
-{
-  //moveAIAtDepth(3);
-}
-
-//due to exploring moves in random order alpha beta pruning is not effective
-//consider
-  //find moves in shortest path
-  //explore those moves first
-  //explore more central moves next
 function moveAIAtDepth(depthLevel)
 {
   if (turn != AIPlayerNumber)
@@ -74,21 +73,20 @@ function moveAIAtDepth(depthLevel)
   let alpha = -Infinity;
   let beta = Infinity;
   let depth = depthLevel; //in order to further increase this depth, 
-  for (var row = 0; row < board.length; row++)
-  {
-    for (var col = 0; col < board[row].length; col++)
-    {
-      if (board[row][col] != 0)
-        continue;
-      copy = JSON.parse(JSON.stringify(board)); 
-      copy[row][col] = AIPlayerNumber;
-      let value = minMax(copy, depth - 1, false, alpha, beta);
-      if (value > bestValue
-          || (value == bestValue && moreCentral(bestMove.x, bestMove.y, col, row)))
-       {
-        bestValue = value;
-        bestMove = {y: row, x:col}};
-      }
+  let openMoves = getOpenCentralMoves(board);
+  for (let openMove of openMoves){
+    let row = openMove.y;
+    let col = openMove.x;
+    if (board[row][col] != 0)
+      continue;
+    copy = JSON.parse(JSON.stringify(board)); 
+    copy[row][col] = AIPlayerNumber;
+    let value = minMax(copy, depth - 1, false, alpha, beta);
+    if (value > bestValue)
+     {
+      bestValue = value;
+      bestMove = {y: row, x:col}};
+      
   }
   board[bestMove.y][bestMove.x] = AIPlayerNumber;
 }
@@ -106,4 +104,27 @@ function calculateHeuristic(board)
     return calculateRedMovesToWin(board) - calculateBlueMovesToWin(board);
   else if (AIPlayerNumber == 1)
     return calculateBlueMovesToWin(board) - calculateRedMovesToWin(board);
+}
+
+//return a list of open spots in each player's most central shortest path
+function getOpenCentralMoves(board)
+{
+  var redShortestPath = getRedShortestPath(board);
+  var redOpenSpot = [];
+  for (let entry of redShortestPath)
+  {
+    if (board[entry.y][entry.x] != 1)
+      redOpenSpot.push(entry);
+  }
+ 
+  var blueShortestPath = getBlueShortestPath(board);
+  var blueOpenSpot = [];  
+  for (let entry of blueShortestPath)
+  {
+    if (board[entry.y][entry.x] != 2)
+      blueOpenSpot.push(entry);
+  }
+
+  let allOpenSpots = new Set([...redOpenSpot, ...blueOpenSpot]);
+  return allOpenSpots;
 }

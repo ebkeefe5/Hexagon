@@ -7,7 +7,15 @@ const left = i => (i << 1) + 1;
 const right = i => (i + 1) << 1;
 
 class PriorityQueue {
-  constructor(comparator = (a, b) => a.stepsFromStart < b.stepsFromStart) {
+  constructor(comparator = (a, b) => {
+    if (a.stepsFromStart !== b.stepsFromStart) {
+      return a.stepsFromStart < b.stepsFromStart;
+    } else {
+      var aCentrality = Math.abs(5 - a.xPos) + Math.abs(5 - a.yPos);
+      var bCentrality = Math.abs(5 - b.xPos) + Math.abs(5 - b.yPos);
+      return aCentrality < bCentrality;
+    }
+  }) {
     this._heap = [];
     this._comparator = comparator;
   }
