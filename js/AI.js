@@ -111,14 +111,31 @@ function calculateHeuristic(board)
 //TODO the list of potential moves can be a lot smarter
 function getOpenCentralMoves(board)
 {
+  let topBridgeHex = null; //highest red hex row 1  
+  let bottomBridgeHex = null; //lowest red hex above row 9
   var redShortestPath = getRedShortestPath(board);
   var redOpenSpot = [];
   for (let entry of redShortestPath)
   {
     if (board[entry.y][entry.x] != 1)
       redOpenSpot.push(entry);
+    else
+    {
+      if ((entry.y > 1 && topBridgeHex == null) 
+        || entry.y > 1 && entry.y < topBridgeHex.y)
+      topBridgeHex = entry;
+      if ((entry.y < 9 && bottomBridgeHex == null) 
+        || entry.y < 9 && entry.y > bottomBridgeHex.y)
+      bottomBridgeHex = entry;
+    }
   }
- 
+  if (topBridgeHex != null)
+    console.log("topBridgeHex: " + topBridgeHex.x + " " + topBridgeHex.y);
+  if (bottomBridgeHex != null)
+    console.log("bottomBridgeHex: " + bottomBridgeHex.x + " " + bottomBridgeHex.y);
+
+  let rightBridgeHex = null; //right most blue hex before col 9
+  let leftBridgeHex = null; //left most blue hex after col 1
   var blueShortestPath = getBlueShortestPath(board);
   var blueOpenSpot = [];  
   for (let entry of blueShortestPath)
@@ -126,6 +143,10 @@ function getOpenCentralMoves(board)
     if (board[entry.y][entry.x] != 2)
       blueOpenSpot.push(entry);
   }
+
+  //
+  //blue two hexagons right, one hexagon up
+  //two hexagons left, one hexagon down
 
   let allOpenSpots = new Set([...redOpenSpot, ...blueOpenSpot]);
   return allOpenSpots;
