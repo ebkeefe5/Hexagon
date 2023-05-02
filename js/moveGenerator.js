@@ -7,11 +7,16 @@ function getOpenCentralMoves(board)
   var redShortestPath = getRedShortestPath(board);
   var redOpenSpot = [];
 
-  let lastClaimedY = -10;
-  for (let entry of redShortestPath)
+  for (let i = 0; i < redShortestPath.length; i++)
   {
-    if (board[entry.y][entry.x] != 1
-      && (entry.y == lastClaimedY + 1 || entry.y == lastClaimedY - 1))
+    const entry = redShortestPath[i];
+    var adj = false;
+    if (i > 0 && board[redShortestPath[i-1].y][redShortestPath[i-1].x] == 1)
+      adj = true;
+    if (i < redShortestPath.length - 1 && board[redShortestPath[i+1].y][redShortestPath[i+1].x] == 1)
+      adj = true;
+
+    if (board[entry.y][entry.x] != 1 && adj)
       redOpenSpot.push(entry);
     else if (board[entry.y][entry.x] == 1)
     {
@@ -21,34 +26,55 @@ function getOpenCentralMoves(board)
       if ((entry.y < 9 && bottomBridgeHex == null)
         || entry.y < 9 && entry.y > bottomBridgeHex.y)
       bottomBridgeHex = entry;
-      lastClaimedY = entry.y;
     }
-
   }
-  if (topBridgeHex != null)
-    console.log("topBridgeHex: " + topBridgeHex.x + " " + topBridgeHex.y);
-  if (bottomBridgeHex != null)
-    console.log("bottomBridgeHex: " + bottomBridgeHex.x + " " + bottomBridgeHex.y);
+  if (topBridgeHex != null
+    && topBridgeHex.x + 1 < 11
+      && board[topBridgeHex.y - 2][topBridgeHex.x + 1] == 0)
+    redOpenSpot.push({x:topBridgeHex.x + 1, y:topBridgeHex.y - 2})
+  if (bottomBridgeHex != null
+    && bottomBridgeHex.x - 1 >= 0
+      && board[bottomBridgeHex.y + 2][bottomBridgeHex.x  - 1] == 0)
+    redOpenSpot.push({x:bottomBridgeHex.x  - 1, y:bottomBridgeHex.y + 2})
 
   let rightBridgeHex = null; //right most blue hex before col 9
   let leftBridgeHex = null; //left most blue hex after col 1
   var blueShortestPath = getBlueShortestPath(board);
   var blueOpenSpot = [];
-  let lastClaimedX = -10;
-  for (let entry of blueShortestPath)
+  for (let i = 0; i < blueShortestPath.length; i++)
   {
+    const entry = blueShortestPath[i];
+    var adj = false;
+    if (i > 0 && board[blueShortestPath[i-1].y][blueShortestPath[i-1].x] == 2)
+      adj = true;
+    if (i < blueShortestPath.length - 1 && board[blueShortestPath[i+1].y][blueShortestPath[i+1].x] == 2)
+      adj = true;
+
     if (board[entry.y][entry.x] != 2
-      && (entry.x == lastClaimedX + 1 || entry.x == lastClaimedX - 1))
+      && adj)
       blueOpenSpot.push(entry);
     else if (board[entry.y][entry.x] == 2)
     {
-      lastClaimedX = entry.x;
+      if ((entry.x > 1 && leftBridgeHex == null)
+        || entry.x > 1 && entry.x < leftBridgeHex.x)
+      leftBridgeHex = entry;
+      if ((entry.x < 9 && rightBridgeHex == null)
+        || entry.x < 9 && entry.x > rightBridgeHex.x)
+      rightBridgeHex = entry;
     }
   }
 
-  //
-  //blue two hexagons right, one hexagon up
-  //two hexagons left, one hexagon down
+  //leftBridgeHex.x - 2
+  //leftBridgeHex.y + 1
+
+  if (leftBridgeHex != null
+    && leftBridgeHex.y + 1 < 11
+      && board[leftBridgeHex.y + 1][leftBridgeHex.x - 2] == 0)
+    blueOpenSpot.push({x:leftBridgeHex.x - 2, y:leftBridgeHex.y + 1})
+  if (rightBridgeHex != null
+    && rightBridgeHex.y - 1 >= 0
+      && board[rightBridgeHex.y - 1][rightBridgeHex.x + 2] == 0)
+    blueOpenSpot.push({x:rightBridgeHex.x + 2, y:rightBridgeHex.y - 1})
 
   let allOpenSpots = new Set([...redOpenSpot, ...blueOpenSpot]);
   return allOpenSpots;
