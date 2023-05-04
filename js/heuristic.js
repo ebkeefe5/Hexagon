@@ -5,108 +5,77 @@
 
 var size;
 
+const doubleBridges = new Map([
+  ['-1,-1', { hex1: { x: 0, y: -1 }, hex2: { x: -1, y: 0 } }],
+  ['1,-2', { hex1: { x: 1, y: -1 }, hex2: { x: 0, y: -1 } }],
+  ['2,-1', { hex1: { x: 1, y: 0 }, hex2: { x: 1, y: -1 } }],
+  ['1,1', { hex1: { x: 1, y: 0 }, hex2: { x: 0, y: 1 } }],
+  ['-1,2', { hex1: { x: -1, y: 1 }, hex2: { x: 0, y: 1 } }],
+  ['-2,1', { hex1: { x: -1, y: 0 }, hex2: { x: -1, y: 1 } }]
+]);
+
+
 function calculateRedMovesToWin(board)
 {
-	var trackBoard = JSON.parse(JSON.stringify(board)); //indexed as [row][col] or [yPos][xPos]
-    var toVisit = new PriorityQueue(); //min heap of hexagons to explore
-    size = trackBoard.length;
-	for (var col = 0; col < trackBoard.length; col++)
-	{
-		insertHexagonRed(col, 0, trackBoard[0][col], 0, toVisit, trackBoard);
-	}
-	
-	const directions = [[0, -1], [1, -1], 
-						[-1, 0], [1, 0], 
-						[-1, 1], [0, 1]];
-
-	while(!toVisit.isEmpty())
-	{
-		var hex = toVisit.pop();
-		if (hex.yPos == size - 1)
-			return hex.stepsFromStart;
-		else
-		{
-			for (const [di, dj] of directions) 
-			{
-				var col = hex.xPos + di; var row = hex.yPos + dj;
-		    	if (row >= 0 && row < size && col >= 0 && col < size)
-		    	{
-		    		insertHexagonRed(col, row, trackBoard[row][col], hex.stepsFromStart, toVisit, trackBoard);
-		    	}
-	    	}
-		}
-	}
-	console.log("error: trying to check min moves to win for red and the game is over");
-	return 100000;
+	var redShortestPath = getRedShortestPath(board);
+	return getHeuristicScore(redShortestPath, board);
 }
 
 function calculateBlueMovesToWin(board)
 {
-	var trackBoard = JSON.parse(JSON.stringify(board)); //indexed as [row][col] or [yPos][xPos]
-    var toVisit = new PriorityQueue(); //min heap of hexagons to explore
-    size = trackBoard.length;
-	for (var row = 0; row < trackBoard.length; row++)
-	{
-		insertHexagonBlue(0, row, trackBoard[row][0], 0, toVisit, trackBoard);
-	}
-	
-	const directions = [[0, -1], [1, -1], 
-						[-1, 0], [1, 0], 
-						[-1, 1], [0, 1]];
-
-	while(!toVisit.isEmpty())
-	{
-		var hex = toVisit.pop();
-		if (hex.xPos == size - 1)
-			return hex.stepsFromStart;
-		else
-		{
-			for (const [di, dj] of directions) 
-			{
-				var col = hex.xPos + di; var row = hex.yPos + dj;
-		    	if (row >= 0 && row < size && col >= 0 && col < size)
-		    	{
-		    		insertHexagonBlue(col, row, trackBoard[row][col], hex.stepsFromStart, toVisit, trackBoard);
-		    	}
-	    	}
-		}
-	}
-	console.log("error: trying to check min moves to win for red and the game is over");
-	return 100000;
+	var blueShortestPath = getBlueShortestPath(board);
+	return getHeuristicScore(blueShortestPath, board);
 }
 
-function insertHexagonRed(xPos, yPos, value, steps, toVisit, trackBoard)
+function getHeuristicScore(path, board)
 {
-	if (value == -1 || value == 2) //red cannot move where blue has moved or on an illegal move
-		return;
-	else if (value == 0)
+	if (path == null)
 	{
-		trackBoard[yPos][xPos] = -1
-		toVisit.push({xPos: xPos, yPos: yPos, stepsFromStart: steps + 1});
+		console.log(board);
+		console.log("error trying to calculate red moves left to win game");
+		return 10000;
 	}
-	else if (value == 1)
+	var doubleBridges = 0;
+	var moves = 0;
+	var lastEntry = null; //last filled spot
+	for (let i = 0; i < path.length; i++)
 	{
-		trackBoard[yPos][xPos] = -1
-		toVisit.push({xPos: xPos, yPos: yPos, stepsFromStart: steps});
-	}
-} 
+		var entry = path[i];
+		if (isDoubleBridge(entry, lastEntry, board))
+			doubleBridges ++;
+		
+		if (board[entry.y][entry.x] == 0)
+			moves++;
+		else
+			lastEntry = entry;
+    }
+    if (moves <= 1)
+    	return moves;
+    return moves - 0.01 * doubleBridges;
+}
 
-function insertHexagonBlue(xPos, yPos, value, steps, toVisit, trackBoard)
+function isDoubleBridge(entry, lastEntry, board)
 {
-	if (value == -1 || value == 1) //red cannot move where blue has moved or on an illegal move
-		return;
-	else if (value == 0)
-	{
-		trackBoard[yPos][xPos] = -1
-		toVisit.push({xPos: xPos, yPos: yPos, stepsFromStart: steps + 1});
-	}
-	else if (value == 2)
-	{
-		trackBoard[yPos][xPos] = -1
-		toVisit.push({xPos: xPos, yPos: yPos, stepsFromStart: steps});
-	}
-} 
+	if (lastEntry == null 
+		|| board[lastEntry.y][lastEntry.x] == 0
+			|| board[entry.y][entry.x] == 0)
+		return false;
 
+	var changeX = lastEntry.x - entry.x;
+	var changeY = lastEntry.y - entry.y;
+	const key = getKey(changeX, changeY);
+	
+	const doubleBridge = doubleBridges.get(key);
+	if (doubleBridge === undefined)
+		return false;
 
-//find moves needed for blue to win
-//adjust above algorithm for blue
+	var hex1 = doubleBridge.hex1;
+	var hex2 = doubleBridge.hex2;
+
+	return board[entry.y + hex1.y][entry.x + hex1.x] == 0 
+		&& board[entry.y + hex2.y][entry.x + hex2.x] == 0;
+}
+
+function getKey(x, y) {
+  return `${x},${y}`;
+}

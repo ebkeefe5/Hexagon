@@ -13,6 +13,19 @@ function moveAILevel3(board)
 }
 
 function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
+  
+  if (maximizingPlayer) {
+    if ((AIPlayerNumber == 1 && checkWinBoardPlayer2(boardCopy))
+      || (AIPlayerNumber == 2 && checkWinBoardPlayer1(boardCopy)))
+      return -Infinity;
+  }
+  else
+  {
+    if ((playerNumber == 1 && checkWinBoardPlayer2(boardCopy))
+      || (playerNumber == 2 && checkWinBoardPlayer1(boardCopy)))
+      return Infinity;
+  }
+     
   if (depth === 0){
     return calculateHeuristic(boardCopy);
   }
@@ -20,9 +33,6 @@ function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
   if (maximizingPlayer) {
     let bestValue = -Infinity;
     //TODO only check if game over if at least 11 moves
-    if ((AIPlayerNumber == 1 && checkWinBoardPlayer2(boardCopy))
-      || (AIPlayerNumber == 2 && checkWinBoardPlayer1(boardCopy)))
-      return -Infinity;
     let openMoves = getOpenCentralMoves(boardCopy);
     for (let openMove of openMoves){
       let row = openMove.y;

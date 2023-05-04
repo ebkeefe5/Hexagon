@@ -35,8 +35,7 @@ function getRedShortestPath(board)
         }
     }
   }
-  console.log("error: trying to check min moves to win for red and the game is over");
-  return 100000;
+  return null;
 }
 
 function getBlueShortestPath(board)
@@ -70,8 +69,7 @@ function getBlueShortestPath(board)
         }
     }
   }
-  console.log("error: trying to check min moves to win for red and the game is over");
-  return 100000;
+  return null;
 }
 
 function insertHexagonRedWithParent(xPos, yPos, value, steps, toVisit, trackBoard, parent)
