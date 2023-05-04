@@ -22,14 +22,11 @@ function getHeuristicScore(path, board)
 	}
 	var doubleBridges = 0;
 	var moves = 0;
-	var lastEntry = null; //last filled spot
 	for (let i = 0; i < path.length; i++)
 	{
 		var entry = path[i];
 		if (board[entry.y][entry.x] == 0)
 			moves++;
-		else
-			lastEntry = entry;
     }
     return moves;
 }
