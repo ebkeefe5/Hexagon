@@ -1,5 +1,6 @@
 //return a list of open spots in each player's most central shortest path next to an already claimed spot on the path
 //also return double bridges if there is a viable double bridge on each side of the path
+
 function getOpenCentralMoves(board)
 {
   let topBridgeHex = null; //highest red hex row 1

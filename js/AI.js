@@ -37,10 +37,6 @@ function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
     for (let openMove of openMoves){
       let row = openMove.y;
       let col = openMove.x;
-      if (row < 0 || row > 10)
-        console.log("bad row: " + row);
-      if (col < 0 || col > 10)
-        console.log("bad col: " + col);
       if (boardCopy[row][col] != 0)
         continue;
       copy = JSON.parse(JSON.stringify(boardCopy));
