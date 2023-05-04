@@ -1,0 +1,46 @@
+Bug Fixes
+* fix bug where the AI sometimes "plays" with the opponent when it could just win
+* don't need to check for game over condition unless at least 11 turns have been made
+
+Strong Areas
+Heuristic is strong
+* length of unclaimed spots in opponents most central shortest path - length of unclaimed spots in your central shortest path
+* min max AI is working well
+
+Improvements
+The main area for improvement is probably in moveGenerator.js
+
+For each player's shortest path we only need to consider 3 moves.
+* the most important move in between the two ends of the path
+  * if there is a point vulnerable to being cut off consider that point. if there are multiple choose the most central one
+  * if there is not a point vulnerable to being cut off consider the most central of the moves in between the two ends of the path
+
+* for each end of the path, we have 4 ways to push towards the edge, denoted as X
+  * most direct bridge pushing 2 rows/cols towards edge
+  x
+   x
+    x
+
+     X
+
+  * bridge pushing 1 row/col towards edge in one direction
+  x
+   x
+    x
+      X
+
+  * bridge pushing 1 row/col towards edge in other direction
+  x
+   x
+    x
+  X
+
+  * continue most central line
+  x
+   x
+    x
+     X
+
+ * for each end of the path, come up with a way to choose the best of those 4 moves
+
+If we only consider at most 6 moves per search, we can consider about 5 levels deep, perhaps 6
