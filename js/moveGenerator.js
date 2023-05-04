@@ -37,6 +37,8 @@ function getOpenCentralMoves(board)
       && board[bottomBridgeHex.y + 2][bottomBridgeHex.x  - 1] == 0)
     redOpenSpot.push({x:bottomBridgeHex.x  - 1, y:bottomBridgeHex.y + 2})
 
+  pushCentralSpotIfNeeded(board, redOpenSpot, redShortestPath);
+
   let rightBridgeHex = null; //right most blue hex before col 9
   let leftBridgeHex = null; //left most blue hex after col 1
   var blueShortestPath = getBlueShortestPath(board);
@@ -76,6 +78,36 @@ function getOpenCentralMoves(board)
       && board[rightBridgeHex.y - 1][rightBridgeHex.x + 2] == 0)
     blueOpenSpot.push({x:rightBridgeHex.x + 2, y:rightBridgeHex.y - 1})
 
+  pushCentralSpotIfNeeded(board, blueOpenSpot, blueShortestPath);
+
   let allOpenSpots = new Set([...redOpenSpot, ...blueOpenSpot]);
   return allOpenSpots;
+}
+
+//if viable spots were found push the most central open spot
+function pushCentralSpotIfNeeded(board, openSpots, shortestPath)
+{
+  if (openSpots.length == 0)
+  {
+    var lowIndex = Math.floor(shortestPath.length/2);
+    var highIndex = Math.floor(shortestPath.length/2 + 1);
+    while (true)
+    {   
+      if (lowIndex >= 0 && board[shortestPath[lowIndex].y][shortestPath[lowIndex].x] == 0)
+      {
+        openSpots.push(shortestPath[lowIndex]);
+        break;
+      }
+      
+      if (highIndex < shortestPath.length && board[shortestPath[lowIndex].y][shortestPath[lowIndex].x] == 0)
+      {
+        openSpots.push(shortestPath[highIndex]);
+        break;
+      }
+      lowIndex--;
+      highIndex ++;
+      if (lowIndex < 0 || highIndex >= shortestPath.length)
+        break;   
+    }
+  }
 }

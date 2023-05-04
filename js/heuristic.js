@@ -1,6 +1,7 @@
 //heuristic to estimate how good board state is for each player 
 //#moves needed for red to win - #moves needed for blue to win
 //red wants to minimize this number, blue wants to maximize this number
+//TO DO update heurstic to account for double bridges
 
 var size;
 

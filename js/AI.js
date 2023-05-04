@@ -9,7 +9,7 @@ function moveAILevel2(board) {
 
 function moveAILevel3(board)
 {
-  moveAIAtDepth(3);
+  moveAIAtDepth(4);
 }
 
 function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
