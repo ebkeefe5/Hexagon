@@ -35,12 +35,11 @@ function selectRed()
       alert("Please restart game to change color");    
     return;
   }
-  selectBlueButton.style.color = '#CCCCCC';
-  selectBlueButton.style.border = '2px solid #2d2d2d'
+  selectBlueButton.style.background = '#2d2d2d'
   turn = 1;
   playerNumber = 1;
   AIPlayerNumber = 2;
-  selectRedButton.style.background = 'black';
+  selectRedButton.style.background = '#161616';
   playerTurn.innerHTML = 'Black\'s move!';
 }
 
@@ -52,12 +51,11 @@ function selectBlue()
       alert("Please restart game to change color");
     return;
   }
-  selectRedButton.style.background = '#2d2d2d';
+  selectRedButton.style.background = '#2d2d2d'
   turn = 1;
   playerNumber = 2;
   AIPlayerNumber = 1;
-  selectBlueButton.style.color = '#E5B80B';
-  selectBlueButton.style.border = '2px solid #E5B80B'
+  selectBlueButton.style.background = '#161616';
   if (difficulty == 1)
     moveAI(board);
   else if (difficulty == 2)
@@ -78,9 +76,9 @@ function select1()
     return;
   }
   difficulty = 1;
-  select1Btn.style.color = '#E5B80B';
-  select2Btn.style.color = '#CCCCCC';
-  select3Btn.style.color = '#CCCCCC';
+  select1Btn.style.background = '#161616';
+  select2Btn.style.background = '#2d2d2d';
+  select3Btn.style.background = '#2d2d2d';
 }
 
 function select2()
@@ -92,9 +90,9 @@ function select2()
     return;
   }
   difficulty = 2;
-  select2Btn.style.color = '#E5B80B';
-  select1Btn.style.color = '#CCCCCC';
-  select3Btn.style.color = '#CCCCCC';
+  select2Btn.style.background = '#161616';
+  select1Btn.style.background = '#2d2d2d';
+  select3Btn.style.background = '#2d2d2d';
 }
 
 function select3()
@@ -106,9 +104,9 @@ function select3()
     return;
   }
   difficulty = 3;
-  select3Btn.style.color = '#E5B80B';
-  select1Btn.style.color = '#CCCCCC';
-  select2Btn.style.color = '#CCCCCC';
+  select3Btn.style.background = '#161616';
+  select1Btn.style.background = '#2d2d2d';
+  select2Btn.style.background = '#2d2d2d';
 }
 
 function markGameInProgress()
