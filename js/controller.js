@@ -35,12 +35,12 @@ function selectRed()
       alert("Please restart game to change color");    
     return;
   }
-  selectBlueButton.style.background = '#FF9000';
+  selectBlueButton.style.background = '#EB6123';
   turn = 1;
   playerNumber = 1;
   AIPlayerNumber = 2;
-  selectRedButton.style.background = '#994B00';
-  playerTurn.innerHTML = 'Brown\'s move!';
+  selectRedButton.style.background = '#A5400D';
+  playerTurn.innerHTML = 'Black\'s move!';
 }
 
 function selectBlue()
@@ -51,11 +51,11 @@ function selectBlue()
       alert("Please restart game to change color");
     return;
   }
-  selectRedButton.style.background = '#FF9000';
+  selectRedButton.style.background = '#EB6123';
   turn = 1;
   playerNumber = 2;
   AIPlayerNumber = 1;
-  selectBlueButton.style.background = '#994B00';
+  selectBlueButton.style.background = '#A5400D';
   if (difficulty == 1)
     moveAI(board);
   else if (difficulty == 2)
@@ -76,9 +76,9 @@ function select1()
     return;
   }
   difficulty = 1;
-  select1Btn.style.background = '#994B00';
-  select2Btn.style.background = '#FF9000';
-  select3Btn.style.background = '#FF9000';
+  select1Btn.style.background = '#A5400D';
+  select2Btn.style.background = '#EB6123';
+  select3Btn.style.background = '#EB6123';
 }
 
 function select2()
@@ -90,9 +90,9 @@ function select2()
     return;
   }
   difficulty = 2;
-  select2Btn.style.background = '#994B00';
-  select1Btn.style.background = '#FF9000';
-  select3Btn.style.background = '#FF9000';
+  select2Btn.style.background = '#A5400D';
+  select1Btn.style.background = '#EB6123';
+  select3Btn.style.background = '#EB6123';
 }
 
 function select3()
@@ -104,9 +104,9 @@ function select3()
     return;
   }
   difficulty = 3;
-  select3Btn.style.background = '#994B00';
-  select1Btn.style.background = '#FF9000';
-  select2Btn.style.background = '#FF9000';
+  select3Btn.style.background = '#A5400D';
+  select1Btn.style.background = '#EB6123';
+  select2Btn.style.background = '#EB6123';
 }
 
 function markGameInProgress()
@@ -175,7 +175,7 @@ function checkRedWin(board)
   if (checkWinBoardPlayer1(board))
   {
     gameOver = true;
-    playerTurn.innerHTML = "Brown Wins!"
+    playerTurn.innerHTML = "Black Wins!"
     drawBoard();
     return true;
   }
@@ -187,7 +187,7 @@ function checkBlueWin(board)
   if (checkWinBoardPlayer2(board))
   {
     gameOver = true;
-    playerTurn.innerHTML = "Yellow Wins!"
+    playerTurn.innerHTML = "Orange Wins!"
     drawBoard();
     return true;
   }
@@ -198,12 +198,12 @@ function updateTurn()
 {
   if (turn == 1)
   {
-    playerTurn.innerHTML = 'Yellow\'s move!';
+    playerTurn.innerHTML = 'Orange\'s move!';
     turn = 2;
   }
   else
   {
-    playerTurn.innerHTML = 'Brown\'s move!';
+    playerTurn.innerHTML = 'Black\'s move!';
     turn = 1;
   }
 }
