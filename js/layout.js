@@ -95,6 +95,10 @@ function topBorderHtml()
                  'Z"' +
                  fillLine;
 
+    html += '<path d="M' + x1 + ' ' + y3 + ' L ' + x4 + ' ' + y3   + '" stroke="#2d2d2d" stroke-width="2"/>';
+    html += '<path d="M' + x1 + ' ' + y3 + ' L ' + x2 + ' ' + y2   + '" stroke="#2d2d2d" stroke-width="2"/>';
+    html += '<path d="M' + x5 + ' ' + y6 + ' L ' + x9 + ' ' + y6   + '" stroke="#2d2d2d" stroke-width="2"/>';
+    html += '<path d="M' + x5 + ' ' + y6 + ' L ' + x6 + ' ' + y5   + '" stroke="#2d2d2d" stroke-width="2"/>';
     return html;
 }
 
