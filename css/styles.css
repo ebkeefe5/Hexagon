@@ -31,10 +31,10 @@
 }
 
 .button {
-  background-color: #E5B80B;
+  background-color: #2d2d2d;
   border-style:solid;
-  border: 1 px solid black;
-  color: black;
+  border: 2px solid #2d2d2d;
+  color: #CCCCCC;
   padding: 10px 22px;
   text-align: center;
   display: inline-block;
