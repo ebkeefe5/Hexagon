@@ -131,7 +131,7 @@ function getHexagonHtml(row, col, state, gameType)
                'L' + x1 + " " + y3 +
                'L' + x1 + " " + y1 +
                'Z"' +
-               'stroke="#A9A9A9"' +
+               'stroke="#2d2d2d"' +
                fillLine +
     '</a>';
 }
