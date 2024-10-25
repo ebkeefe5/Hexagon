@@ -39,7 +39,7 @@ function selectRed()
   turn = 1;
   playerNumber = 1;
   AIPlayerNumber = 2;
-  selectRedButton.style.background = '#A5400D';
+  selectRedButton.style.background = '#B5880B';
   playerTurn.innerHTML = 'Black\'s move!';
 }
 
@@ -55,7 +55,7 @@ function selectBlue()
   turn = 1;
   playerNumber = 2;
   AIPlayerNumber = 1;
-  selectBlueButton.style.background = '#A5400D';
+  selectBlueButton.style.background = '#B5880B';
   if (difficulty == 1)
     moveAI(board);
   else if (difficulty == 2)
@@ -76,7 +76,7 @@ function select1()
     return;
   }
   difficulty = 1;
-  select1Btn.style.background = '#A5400D';
+  select1Btn.style.background = '#B5880B';
   select2Btn.style.background = '#E5B80B';
   select3Btn.style.background = '#E5B80B';
 }
@@ -90,7 +90,7 @@ function select2()
     return;
   }
   difficulty = 2;
-  select2Btn.style.background = '#A5400D';
+  select2Btn.style.background = '#B5880B';
   select1Btn.style.background = '#E5B80B';
   select3Btn.style.background = '#E5B80B';
 }
@@ -104,7 +104,7 @@ function select3()
     return;
   }
   difficulty = 3;
-  select3Btn.style.background = '#A5400D';
+  select3Btn.style.background = '#B5880B';
   select1Btn.style.background = '#E5B80B';
   select2Btn.style.background = '#E5B80B';
 }
