@@ -3,7 +3,7 @@ const initialScreen = document.getElementById('initialScreen');
 
 const notAllowedPiece = '#222222';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
-const colors = ['black', '#800000', '#000080', '#800000', '#000080'];
+const colors = ['#2d2d2d', '#800000', '#000080', '#800000', '#000080'];
 
 function drawBoard()
 {
@@ -136,7 +136,7 @@ function getHexagonHtml(row, col, state, gameType)
   else
     firstLine = '<a onclick=handleClickOnePlayer(' + row + ',' + col + ')>';
   
-  var strokeLine = 'stroke="#2d2d2d"'
+  var strokeLine = 'stroke="black"'
   if (state > 2)
     strokeLine = 'stroke="#228B22"'
   return firstLine +
