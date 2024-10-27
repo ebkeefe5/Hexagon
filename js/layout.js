@@ -136,7 +136,7 @@ function getHexagonHtml(row, col, state, gameType)
   else
     firstLine = '<a onclick=handleClickOnePlayer(' + row + ',' + col + ')>';
   
-  var strokeLine = 'stroke="#2d2d2d"'
+  var strokeLine = 'stroke="#555555"'
   if (state > 2)
     strokeLine = 'stroke="white"'
   return firstLine +
