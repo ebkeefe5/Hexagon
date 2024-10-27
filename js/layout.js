@@ -3,7 +3,7 @@ const initialScreen = document.getElementById('initialScreen');
 
 const notAllowedPiece = '#555555';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
-const colors = ['black', '#800000', '#0000E0', '#800000', '#0000E0'];
+const colors = ['#151515', '#800000', '#0000E0', '#800000', '#0000E0'];
 
 function drawBoard()
 {
