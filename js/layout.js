@@ -138,7 +138,7 @@ function getHexagonHtml(row, col, state, gameType)
   
   var strokeLine = 'stroke="#2d2d2d"'
   if (state > 2)
-    strokeLine = 'stroke="white"'
+    strokeLine = 'stroke="#228B22"'
   return firstLine +
       '<path d="M' + x1 + " " + y1 +
                'L' + x2 + " " + y2 +
