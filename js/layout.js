@@ -3,7 +3,7 @@ const initialScreen = document.getElementById('initialScreen');
 
 const notAllowedPiece = '#222222';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
-const colors = ['black', '#800000', '#000080', '#B00000', '#0000D0'];
+const colors = ['black', '#800000', '#000080', '#800000', '#000080'];
 
 function drawBoard()
 {
@@ -19,6 +19,19 @@ function drawBoard()
     for (col = 0; col < board[row].length; col ++)
     {
       boardHtml += getHexagonHtml(row, col, board[row][col], 1);
+    }
+  }
+
+  //winning path
+  if (gameOver)
+  {
+    for (row = 0; row < board.length; row++)
+    {
+      for (col = 0; col < board[row].length; col ++)
+      {
+        if (board[row][col] > 2)
+          boardHtml += getHexagonHtml(row, col, board[row][col], 1);
+      }
     }
   }
   boardHtml += '</svg>'
@@ -122,6 +135,10 @@ function getHexagonHtml(row, col, state, gameType)
     firstLine = '<a onclick=handleClick(' + row + ',' + col + ')>';
   else
     firstLine = '<a onclick=handleClickOnePlayer(' + row + ',' + col + ')>';
+  
+  var strokeLine = 'stroke="#2d2d2d"'
+  if (state > 2)
+    strokeLine = 'stroke="#228B22"'
   return firstLine +
       '<path d="M' + x1 + " " + y1 +
                'L' + x2 + " " + y2 +
@@ -131,7 +148,7 @@ function getHexagonHtml(row, col, state, gameType)
                'L' + x1 + " " + y3 +
                'L' + x1 + " " + y1 +
                'Z"' +
-               'stroke="#2d2d2d"' +
+               strokeLine +
                fillLine +
     '</a>';
 }
