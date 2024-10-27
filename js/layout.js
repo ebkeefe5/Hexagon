@@ -3,7 +3,7 @@ const initialScreen = document.getElementById('initialScreen');
 
 const notAllowedPiece = '#222222';
 //unclaimedPiece, player1Piece, player2Piece, player1PieceWon, player2PieceWon
-const colors = ['#2d2d2d', '#000000', '#E5B80B', '#505050', '#B5880B'];
+const colors = ['black', '#800000', '#000080', '#B00000', '#0000D0'];
 
 function drawBoard()
 {
@@ -95,10 +95,6 @@ function topBorderHtml()
                  'Z"' +
                  fillLine;
 
-    html += '<path d="M' + x1 + ' ' + y3 + ' L ' + x4 + ' ' + y3   + '" stroke="#2d2d2d" stroke-width="2"/>';
-    html += '<path d="M' + x1 + ' ' + y3 + ' L ' + x2 + ' ' + y2   + '" stroke="#2d2d2d" stroke-width="2"/>';
-    html += '<path d="M' + x5 + ' ' + y6 + ' L ' + x9 + ' ' + y6   + '" stroke="#2d2d2d" stroke-width="2"/>';
-    html += '<path d="M' + x5 + ' ' + y6 + ' L ' + x6 + ' ' + y5   + '" stroke="#2d2d2d" stroke-width="2"/>';
     return html;
 }
 
@@ -135,7 +131,7 @@ function getHexagonHtml(row, col, state, gameType)
                'L' + x1 + " " + y3 +
                'L' + x1 + " " + y1 +
                'Z"' +
-               'stroke="#000000"' +
+               'stroke="#2d2d2d"' +
                fillLine +
     '</a>';
 }

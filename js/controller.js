@@ -40,7 +40,7 @@ function selectRed()
   playerNumber = 1;
   AIPlayerNumber = 2;
   selectRedButton.style.background = '#555555';
-  playerTurn.innerHTML = 'Black\'s move!';
+  playerTurn.innerHTML = 'Red\'s move!';
 }
 
 function selectBlue()
@@ -175,7 +175,7 @@ function checkRedWin(board)
   if (checkWinBoardPlayer1(board))
   {
     gameOver = true;
-    playerTurn.innerHTML = "Black Wins!"
+    playerTurn.innerHTML = "Red Wins!"
     drawBoard();
     return true;
   }
@@ -187,7 +187,7 @@ function checkBlueWin(board)
   if (checkWinBoardPlayer2(board))
   {
     gameOver = true;
-    playerTurn.innerHTML = "Yellow Wins!"
+    playerTurn.innerHTML = "Blue Wins!"
     drawBoard();
     return true;
   }
@@ -198,12 +198,12 @@ function updateTurn()
 {
   if (turn == 1)
   {
-    playerTurn.innerHTML = 'Yellow\'s move!';
+    playerTurn.innerHTML = 'Blue\'s move!';
     turn = 2;
   }
   else
   {
-    playerTurn.innerHTML = 'Black\'s move!';
+    playerTurn.innerHTML = 'Red\'s move!';
     turn = 1;
   }
 }
