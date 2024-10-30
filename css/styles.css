@@ -44,6 +44,20 @@
   font-family:ui-sans-serif
 }
 
+.buttonSmall {
+  background-color: #228B22;
+  border-style:solid;
+  border: 2px solid #2d2d2d;
+  color: #CCCCCC;
+  padding: 10px 22px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 12px;
+  font-family:ui-sans-serif
+}
+
+
 .spacerRow{
   padding-bottom: 30px;
 }
