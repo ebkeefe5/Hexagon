@@ -48,6 +48,8 @@ function handleClickOnePlayer(row, col)
   gameInProgress = true;
 
   board[row][col] = turn;
+  if (board[5][5] == -1)
+    board[5][5] = 0;
   updateTurn();
 
   if (turn == 2 && checkRedWin(board))
