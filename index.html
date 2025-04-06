@@ -12,7 +12,7 @@
    <body style="background-color:#D3D3D3">
       <div id="initialScreen">
          <div class="center">
-            <h1>Single Player Hexagon</h1>
+            <h1>Hexagon</h1>
             <div class="row">
                <button type="submit" class="button"id="newSingleGameButton">Create New Game</button>
                <div class = "spacerRow"></div>
@@ -26,6 +26,8 @@
                   Blue wins by connecting the left and right side of the board with an unbroken chain of blue hexagons.
                   The pictures below show an example of a game where red and blue have each won, respectively.
                </p>
+               <div class = "spacerRow"></div>
+               <p>To play, grab a friend and alternate clicks to claim a hexagon for you chosen color.</p>
             </div>
             <div class="row">
                <div class = "spacerColumn"></div>
@@ -44,14 +46,6 @@
          <div id="gameScreen">
             <h1>Hexagon</h1>
             <div class="spacerColumn">
-               <h3>Select Color</h3>
-               <button type="submit" class="button"id="selectRedButton">Red</button>
-               <button type="submit" class="button"id="selectBlueButton">Blue</button>
-               <h3>Select difficulty</h3>
-               <button type="submit" class="button"id="select1">1</button>
-               <button type="submit" class="button"id="select2">2</button>
-               <button type="submit" class="button"id="select3">3</button>
-               <div class = "spacerRow"></div>
                <button type="submit" class="button"id="restartGame">Restart Game</button>
                <div class = "spacerRow"></div>
                <h3 id = "playerTurn">Red's Move!</h3>
@@ -65,11 +59,9 @@
       <script type="text/javascript" src="js/BlueGameOverCheck.js"></script>
       <script type="text/javascript" src="js/board.js"></script>
       <script type="text/javascript" src="js/controller.js"></script>
-      <script type="text/javascript" src="js/AI.js"></script>
       <script type="text/javascript" src="js/PriorityQueue.js"></script>
       <script type="text/javascript" src="js/heuristic.js"></script>
       <script type="text/javascript" src="js/shortestPath.js"></script>
-      <script type="text/javascript" src="js/moveGenerator.js"></script>
       <script type="text/javascript" src="js/doubleBridges.js"></script>
    </body>
 </html>
