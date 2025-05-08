@@ -47,7 +47,7 @@ function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
         continue;
       copy = JSON.parse(JSON.stringify(boardCopy));
       copy[row][col] = AIPlayerNumber;
-      let value = minMax(copy, depth - 1, false);
+      let value = minMax(copy, depth - 1, false, alpha, beta);
       bestValue = Math.max(bestValue, value);
       alpha = Math.max(alpha, value);
       if (beta <= alpha) {
@@ -69,7 +69,7 @@ function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
           continue;
         copy = JSON.parse(JSON.stringify(boardCopy));
         copy[row][col] = playerNumber;
-        let value = minMax(copy, depth - 1, true);
+        let value = minMax(copy, depth - 1, true, alpha, beta);
         bestValue = Math.min(bestValue, value);
         beta = Math.min(beta, value);
         if (beta <= alpha) {
