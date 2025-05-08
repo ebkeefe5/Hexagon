@@ -1,6 +1,12 @@
 function moveAI(board)
 {
-  moveAIAtDepth(1);
+  if (turn != AIPlayerNumber)
+    return;
+
+  let openMoves = Array.from(getOpenCentralMoves(board));
+  const randomIndex = Math.floor(Math.random() * openMoves.length);
+  let bestMove = openMoves[randomIndex];
+  board[bestMove.y][bestMove.x] = AIPlayerNumber;
 }
 
 function moveAILevel2(board) {
@@ -9,7 +15,7 @@ function moveAILevel2(board) {
 
 function moveAILevel3(board)
 {
-  moveAIAtDepth(3);
+  moveAIAtDepth(4);
 }
 
 function minMax(boardCopy, depth, maximizingPlayer, alpha, beta) {
