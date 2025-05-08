@@ -114,6 +114,3 @@ function backTrack(hex)
   }
   return path;   
 }
-
-//find moves needed for blue to win
-//adjust above algorithm for blue

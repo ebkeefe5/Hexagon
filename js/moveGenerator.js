@@ -2,30 +2,26 @@
 //basically we are narrowing down viable moves to improve runtime
 function getOpenCentralMoves(board)
 {
+  let allOpenSpots = []
   var redShortestPath = getRedShortestPath(board);
-  var redOpenSpot = [];
 
   for (let i = 0; i < redShortestPath.length; i++)
   {
     const entry = redShortestPath[i];
     if (board[entry.y][entry.x] != 1)
-      redOpenSpot.push(entry);
+      allOpenSpots.push(entry);
   }
-
-  pushCentralSpotIfNeeded(board, redOpenSpot, redShortestPath);
-
+  
   var blueShortestPath = getBlueShortestPath(board);
-  var blueOpenSpot = [];
   for (let i = 0; i < blueShortestPath.length; i++)
   {
     const entry = blueShortestPath[i];
     if (board[entry.y][entry.x] != 2)
-      blueOpenSpot.push(entry);
+      allOpenSpots.push(entry);
   }
 
-  pushCentralSpotIfNeeded(board, blueOpenSpot, blueShortestPath);
-
-  let allOpenSpots = new Set([...redOpenSpot, ...blueOpenSpot]);
+  pushCentralSpotIfNeeded(board, allOpenSpots, blueShortestPath);
+  
   return allOpenSpots;
 }
 
